@@ -7,5 +7,5 @@ Route::get('/', function () {
 });
 
 Route::get('/tinker', function () {
-   dd('test');
+    dd();
 });
