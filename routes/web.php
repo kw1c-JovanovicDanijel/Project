@@ -10,6 +10,10 @@ Route::get('/login', function () {
     return view('login');
 });
 
+Route::get('/test', function () {
+    return view('components.test');
+});
+
 Route::get('/tinker', function () {
     dd();
 });
