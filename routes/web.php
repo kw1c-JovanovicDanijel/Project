@@ -8,8 +8,8 @@ Route::get('/', function () {
     return Auth::check() ? to_route('dashboard') : view('home');
 })->name('home');
 
-Route::get('/login', [LoginController::class, 'create'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->name('login');
+Route::get('/login', [LoginController::class, 'create'])->middleware(['guest'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->middleware(['guest'])->name('login');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
