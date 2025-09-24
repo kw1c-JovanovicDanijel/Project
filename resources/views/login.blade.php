@@ -1,44 +1,46 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <title>Inloggen - Order Management Systeem</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    @vite('resources/css/app.css')
-</head>
-<body class="bg-gray-900 flex items-center justify-center min-h-screen font-sans">
+<x-layout>
+    <div class="flex flex-col h-screen font-sans bg-gradient-to-br from-black via-gray-900 to-gray-800">
+        <div class="flex items-center justify-center flex-1">
+            <div class="w-full max-w-md p-8 bg-gray-800 border border-gray-700 shadow-2xl rounded-2xl">
+                <h2 class="mb-6 text-3xl font-bold text-center text-[#ff9900]">Inloggen</h2>
 
-<!-- Login Card -->
-<div class="w-full max-w-md bg-gray-800 rounded-2xl shadow-2xl p-8 border border-gray-700">
-    <h2 class="text-3xl font-bold text-white mb-6 text-center">🔑 Inloggen</h2>
+                <!-- Formulier -->
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
 
-    <!-- Formulier -->
+                    <!-- Email -->
+                    <div>
+                        @error('email')
+                            <p class="mb-2 text-sm text-center text-red-500">
+                                {{ $message }}
+                            </p>
+                        @enderror
 
-        @csrf
-        <!-- Gebruikersnaam -->
-        <div>
-            <label for="email" class="block text-sm font-medium text-gray-300">E-mail</label>
-            <input type="email" id="email" name="email" required
-                   class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-700 text-gray-200 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                   placeholder="jouw@email.com">
+                        <label for="email" class="block text-sm font-medium text-gray-300">E-mail</label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-4 py-3 mt-2 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-[#ff9900] focus:outline-none"
+                            placeholder="jouw@email.com" value="{{ old('email') }}">
+                    </div>
+
+                    <!-- Wachtwoord -->
+                    <div class="mt-4">
+                        <label for="password" class="block text-sm font-medium text-gray-300">Wachtwoord</label>
+                        <input type="password" id="password" name="password" required
+                            class="w-full px-4 py-3 mt-2 text-gray-200 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-[#ff9900] focus:outline-none"
+                            placeholder="••••••••">
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-3 mt-6 font-semibold text-black transition bg-[#ff9900] rounded-lg shadow-md hover:bg-yellow-500 cursor-pointer">
+                        Log in
+                    </button>
+
+                    <a href="{{ route('home') }}"
+                        class="block w-full py-3 mt-4 font-semibold text-center text-white transition bg-gray-700 rounded-lg shadow-md hover:bg-gray-600">
+                        Terug naar home
+                    </a>
+                </form>
+            </div>
         </div>
-
-        <!-- Wachtwoord -->
-        <div>
-            <label for="password" class="block text-sm font-medium text-gray-300">Wachtwoord</label>
-            <input type="password" id="password" name="password" required
-                   class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-700 text-gray-200 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                   placeholder="••••••••">
-        </div>
-
-        <!-- Inloggen knop -->
-        <button type="submit"
-                class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition mt-4">
-            Inloggen
-        </button>
-    </form>
-
-</div>
-
-</body>
-</html>
+    </div>
+</x-layout>
