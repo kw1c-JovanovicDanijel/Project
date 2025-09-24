@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
+use App\Models\Customer;
 use App\Models\User;
 use App\UserRoles;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -49,5 +51,9 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
             'role' => UserRoles::LOGISTIEK_MANAGER,
         ]);
+
+        Customer::factory(100)
+            ->has(Address::factory(3))
+            ->create();
     }
 }

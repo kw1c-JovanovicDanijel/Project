@@ -1,39 +1,44 @@
-@props(['columns', 'data'])
+@props(['name', 'columns', 'objects'])
 
-<div class="flex flex-col items-center justify-center pt-20 space-y-6 w-full">
 
-    @php
-        $users = \App\Models\User::all();
-    @endphp
+<div class="flex flex-row items-center w-full space-y-6">
 
-        <!-- Voorbeeld tabel -->
-        <div class="bg-white shadow rounded-xl p-6 w-full"><h3 class="text-xl font-bold text-gray-800 mb-4">Laatste
-                Bestellingen</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border border-gray-200">
-                    <thead class="bg-gray-100 text-gray-700">
+    <!-- Voorbeeld tabel -->
+    <div class="w-full p-6 bg-white shadow rounded-xl">
+        <h3 class="mb-4 text-xl font-bold text-gray-800">
+            {{ $name }}
+        </h3>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border border-gray-200">
+                <thead class="text-gray-700 bg-gray-100">
                     <tr>
-                        <th class="px-4 py-2 border">Order ID</th>
-                        <th class="px-4 py-2 border">Klant</th>
-                        <th class="px-4 py-2 border">Datum</th>
-                        <th class="px-4 py-2 border">Status</th>
+                        @foreach ($columns as $column)
+                            <th class="px-4 py-2 border">{{ $column }}</th>
+                        @endforeach
                     </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                    @foreach ($users as $user)
-
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @foreach ($objects as $object)
                         <tr>
-                        <td class="px-4 py-2 border">{{$user->id}}</td>
-                        <td class="px-4 py-2 border">Jan Jansen</td>
-                        <td class="px-4 py-2 border">20-09-2025</td>
-                        <td class="px-4 py-2 border"><span class="bg-green-100 text-green-700 px-2 py-1 rounded">Verzonden</span>
-                        </td>
-                    </tr>
+                            @php
+                                $object = collect($object);
+                                $created_at = \Carbon\Carbon::parse($object->get('created_at'))->format('d-m-Y');
+                                $updated_at = \Carbon\Carbon::parse($object->get('updated_at'))->format('d-m-Y');
+                                $object = $object->toarray();
+                                $object['created_at'] = $created_at;
+                                $object['updated_at'] = $updated_at;
+                            @endphp
+                            @foreach ($object as $thing)
+                                <td class="px-4 py-2 border">{{ $thing }}</td>
+                            @endforeach
+                        </tr>
                     @endforeach
-
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+            <div class="pt-3">
+                {{ $objects->onEachSide(1)->links() }}
             </div>
         </div>
+    </div>
 
 </div>
