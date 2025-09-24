@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    // TODO: replace first home with dashboard
-    return Auth::check() ? view('home') : view('home');
+    return Auth::check() ? to_route('dashboard') : view('home');
 })->name('home');
 
 Route::get('/login', [LoginController::class, 'create'])->name('login');
@@ -42,6 +41,9 @@ Route::get('/products', function () {
 })->name('products');
 
 Route::view('/dashboard','dashboard')->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
 
 Route::get('/tinker', function () {
     dd();

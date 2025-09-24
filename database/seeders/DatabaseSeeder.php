@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\UserRoles;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,12 +15,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Account Manager',
+            'email' => 'account_manager@admin.com',
+            'password' => Hash::make('admin'),
+            'role' => UserRoles::ACCOUNT_MANAGER,
+        ]);
 
         User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
+            'name' => 'Product Manager',
+            'email' => 'product_manager@admin.com',
             'password' => Hash::make('admin'),
+            'role' => UserRoles::PRODUCT_MANAGER,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Backoffice Medewerker',
+            'email' => 'backoffice_medewerker@admin.com',
+            'password' => Hash::make('admin'),
+            'role' => UserRoles::BACKOFFICE_MEDEWERKER,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Backoffice Manager',
+            'email' => 'backoffice_manager@admin.com',
+            'password' => Hash::make('admin'),
+            'role' => UserRoles::BACKOFFICE_MANAGER,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Logistiek Manager',
+            'email' => 'logistiek_manager@admin.com',
+            'password' => Hash::make('admin'),
+            'role' => UserRoles::LOGISTIEK_MANAGER,
         ]);
     }
 }
