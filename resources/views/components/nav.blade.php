@@ -14,14 +14,13 @@
     <!-- Sidebar -->
     <aside class="w-1/5 bg-gray-800 text-gray-200 p-4 space-y-4">
         <nav class="space-y-3">
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">🏠 Dashboard</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">👥 Klanten</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">📦 Producten</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">📊 Voorraad</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">📝 Orders</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">🛍️ Bestellingen</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">💰 Facturen</a>
-            <a href="#" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">🚚 Leveranciers</a>
+            <a href="{{ route('dashboard')  }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">🏠 Dashboard</a>
+            <a href="{{ route('customers') }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">👥 Klanten</a>
+            <a href="{{ route('products') }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">📦 Producten</a>
+            <a href="{{ route('orders') }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">📝 Orders</a>
+            <a href="{{ route('companyorders') }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">🛍️ Bestellingen</a>
+            <a href="{{ route('invoices') }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">💰 Facturen</a>
+            <a href="{{ route('suppliers') }}" class="block px-4 py-2 rounded-lg hover:bg-orange-500 hover:text-white transition">🚚 Leveranciers</a>
         </nav>
     </aside>
 
