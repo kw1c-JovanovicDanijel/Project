@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    // TODO: replace first home with dashboard
+    return Auth::check() ? view('home') : view('home');
 })->name('home');
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login', [LoginController::class, 'create'])->name('login');
+Route::post('/login', [LoginController::class, 'store'])->name('login');
+Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
 Route::get('/tinker', function () {
     dd();
