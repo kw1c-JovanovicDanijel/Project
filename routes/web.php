@@ -12,14 +12,18 @@ Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
-Route::view('/orders', 'orders')->name('orders');
-Route::view('/companyorders', 'companyorders')->name('companyorders');
-Route::view('/invoices', 'invoices')->name('invoices');
-Route::view('/suppliers', 'suppliers')->name('suppliers');
-Route::view('/customers', 'customers')->name('customers');
-Route::view('/products', 'products')->name('products');
-Route::view('/dashboard', 'dashboard')->name('dashboard');
+Route::group(['middleware' => 'auth'], function () {
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::view('/orders', 'orders')->name('orders');
+    Route::view('/companyorders', 'companyorders')->name('companyorders');
+    Route::view('/invoices', 'invoices')->name('invoices');
+    Route::view('/suppliers', 'suppliers')->name('suppliers');
+    Route::view('/customers', 'customers')->name('customers');
+    Route::view('/products', 'products')->name('products');
+});
+
 
 Route::get('/tinker', function () {
+
     dd();
 });

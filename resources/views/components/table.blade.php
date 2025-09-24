@@ -1,70 +1,39 @@
-@props(['colums', 'data'])
+@props(['columns', 'data'])
 
+<div class="flex flex-col items-center justify-center pt-20 space-y-6 w-full">
 
-<div class="flex items-center justify-center pt-[100px]">
+    @php
+        $users = \App\Models\User::all();
+    @endphp
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-[1250px]">
+        <!-- Voorbeeld tabel -->
+        <div class="bg-white shadow rounded-xl p-6 w-full"><h3 class="text-xl font-bold text-gray-800 mb-4">Laatste
+                Bestellingen</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border border-gray-200">
+                    <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2 border">Order ID</th>
+                        <th class="px-4 py-2 border">Klant</th>
+                        <th class="px-4 py-2 border">Datum</th>
+                        <th class="px-4 py-2 border">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                    @foreach ($users as $user)
 
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <tr>
+                        <td class="px-4 py-2 border">{{$user->id}}</td>
+                        <td class="px-4 py-2 border">Jan Jansen</td>
+                        <td class="px-4 py-2 border">20-09-2025</td>
+                        <td class="px-4 py-2 border"><span class="bg-green-100 text-green-700 px-2 py-1 rounded">Verzonden</span>
+                        </td>
+                    </tr>
+                    @endforeach
 
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-
-            <tr>
-
-                <th scope="col" class="px-6 py-3">ID</th>
-
-                <th scope="col" class="px-6 py-3">Name</th>
-
-                <th scope="col" class="px-6 py-3">View</th>
-
-                <th scope="col" class="px-6 py-3">Edit</th>
-
-            </tr>
-
-            </thead>
-
-            <tbody>
-@php
-$users = \App\Models\User::all();
- @endphp
-@foreach ($users as $user)
-
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-
-                    <td class="px-6 py-3">{{ $user->id }}</td>
-
-                    <td class="px-6 py-3">{{ $user->name }}</td>
-
-
-                    <td class="px-6 py-3">
-
-                        <a href="#"
-
-                           class="text-blue-500 hover:underline">View</a>
-
-                    </td>
-
-                    <td class="px-6 py-3">
-
-                        <a href="#"
-
-                           class="text-yellow-500 hover:underline">Edit</a>
-
-                    </td>
-
-                </tr>
-
-            @endforeach
-
-            </tbody>
-
-        </table>
-
-        <div class="pb-[75px]">
-
-
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-    </div>
 
 </div>

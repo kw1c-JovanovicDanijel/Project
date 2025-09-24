@@ -4,7 +4,7 @@
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold tracking-wide text-orange-500">🛒 Amazon Dashboard</h1>
         <div class="flex space-x-4 items-center">
-            <span class="text-gray-300">Welkom, Admin</span>
+            <span class="text-gray-300">Welkom, {{ auth()?->user()?->name  }}</span>
             <button class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg text-white font-semibold">Uitloggen</button>
         </div>
     </div>
