@@ -22,7 +22,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/products', 'products')->name('products');
 });
 
-
 Route::get('/tinker', function () {
 
     dd();
