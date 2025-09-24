@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -11,7 +12,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customers');
+        $customers = Customer::paginate(10);
+
+        // hide id from each model inside the paginator
+        $customers->getCollection()->transform(function ($customer) {
+            return $customer->makeHidden('id');
+        });
+
+        return view('customers', ['customers' => $customers]);
     }
 
     /**

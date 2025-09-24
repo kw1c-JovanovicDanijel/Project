@@ -1,12 +1,13 @@
-@props(['columns', 'objects'])
+@props(['name', 'columns', 'objects'])
 
 
-<div class="flex flex-col items-center justify-center w-full space-y-6">
+<div class="flex flex-row items-center w-full space-y-6">
 
     <!-- Voorbeeld tabel -->
     <div class="w-full p-6 bg-white shadow rounded-xl">
-        <h3 class="mb-4 text-xl font-bold text-gray-800">Laatste
-            Bestellingen</h3>
+        <h3 class="mb-4 text-xl font-bold text-gray-800">
+            {{ $name }}
+        </h3>
         <div class="overflow-x-auto">
             <table class="w-full text-left border border-gray-200">
                 <thead class="text-gray-700 bg-gray-100">
@@ -32,9 +33,11 @@
                             @endforeach
                         </tr>
                     @endforeach
-
                 </tbody>
             </table>
+            <div class="pt-3">
+                {{ $objects->onEachSide(1)->links() }}
+            </div>
         </div>
     </div>
 
