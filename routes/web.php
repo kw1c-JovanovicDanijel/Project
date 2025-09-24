@@ -14,6 +14,10 @@ Route::get('/test', function () {
     return view('components.test');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+});
+
 Route::get('/tinker', function () {
     dd();
 });
