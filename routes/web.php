@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
@@ -18,7 +19,8 @@ Route::post('/logout', LogoutController::class)->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers');
+    Route::resource('/customers', CustomerController::class);
+
     Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
     Route::get('/products', [ProductController::class, 'index'])->name('products');
 
@@ -26,9 +28,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/orders', 'orders')->name('orders');
     Route::view('/companyorders', 'companyorders')->name('companyorders');
     Route::view('/invoices', 'invoices')->name('invoices');
+
+    Route::view('/products', 'products')->name('products');
+
+    Route::resource('/address', AddressController::class)->except(['index', 'show']);
 });
 
 Route::get('/tinker', function () {
-
     dd();
 });

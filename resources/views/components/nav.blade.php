@@ -22,7 +22,7 @@
         <nav class="space-y-3">
             <a href="{{ route('dashboard') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">🏠 Dashboard</a>
-            <a href="{{ route('customers') }}"
+            <a href="{{ route('customers.index') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">👥 Klanten</a>
             <a href="{{ route('products') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">📦 Producten</a>

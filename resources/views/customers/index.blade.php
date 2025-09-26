@@ -3,9 +3,10 @@
 $customers;
 $name = 'Klanten overzicht';
 $columns = ['naam', 'email', 'gemaakt op', 'geupdate op'];
+$route = 'customers';
 ?>
 <x-layout>
     <x-nav>
-        <x-table :name="$name" :columns="$columns" :objects="$customers" />
+        <x-table :name="$name" :columns="$columns" :objects="$customers" :route="$route" />
     </x-nav>
 </x-layout>

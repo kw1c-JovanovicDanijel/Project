@@ -4,11 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\UserRoles;
 use App\Models\Address;
-use App\Models\Customer;
-use App\Models\Product;
-use App\Models\Supplier;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -55,13 +51,5 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Address::factory(100)->create();
-
-        Product::factory(100)->create();
-        //        Customer::factory(100)
-        //            ->has(Address::factory(rand(1, 3)))
-        //            ->create();
-        //        Supplier::factory(100)
-        //            ->has(Address::factory(rand(1, 3)))
-        //            ->create();
     }
 }

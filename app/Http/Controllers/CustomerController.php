@@ -14,10 +14,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::paginate(10);
 
-        // hide id from each model inside the paginator
-        $customers->getCollection()->transform(fn ($customer) => $customer->makeHidden('id'));
-
-        return view('customers', ['customers' => $customers]);
+        return view('customers.index', ['customers' => $customers]);
     }
 
     /**
@@ -25,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -33,7 +30,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:customers,email'],
+        ]);
+
+        Customer::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        return to_route('customers.index');
     }
 
     /**
@@ -41,7 +48,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('customers.show', ['customer_id' => $id]);
     }
 
     /**
@@ -49,7 +56,9 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customer = Customer::find($id);
+
+        return view('customers.edit', ['id' => $customer->id]);
     }
 
     /**
@@ -57,7 +66,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $customer = Customer::find($id);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+        ]);
+
+        $customer->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        return to_route('customers.show', $customer);
     }
 
     /**
@@ -65,6 +86,11 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $customer = Customer::find($id);
+        if ($customer) {
+            $customer->delete();
+        }
+
+        return to_route('customers.index');
     }
 }
