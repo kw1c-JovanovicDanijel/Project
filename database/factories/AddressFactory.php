@@ -23,10 +23,10 @@ class AddressFactory extends Factory
             'street_name' => fake()->streetName(),
             'zip_code' => fake()->postcode(),
             'city' => fake()->city(),
-            'addressable_id' =>  fake()->boolean(50)
+            'addressable_id' => fake()->boolean(50)
             ? Customer::factory()
             : Supplier::factory(),
-            'addressable_type' =>  fake()->boolean(50)
+            'addressable_type' => fake()->boolean(50)
             ? Customer::class
             : Supplier::class,
 
