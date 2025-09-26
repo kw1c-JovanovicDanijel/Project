@@ -27,9 +27,16 @@
                     {{ \Carbon\Carbon::parse($customer->updated_at)->format('d-m-Y') }}
                 </p>
 
-                <h2 class="text-2xl font-bold text-[#ff9900] mt-10 mb-4">
-                    Adressen:
-                </h2>
+                <div class="flex justify-between items-center mt-10 mb-4">
+                    <h2 class="text-2xl font-bold text-[#ff9900]">
+                        Adressen:
+                    </h2>
+                    <!-- Nieuw Adres knop -->
+                    <a href="{{ route('address.create', ['customer_id' => $customer->id]) }}"
+                        class="px-4 py-2 bg-[#ff9900] text-black font-semibold rounded-lg shadow hover:bg-yellow-500 transition">
+                        Nieuw Adres
+                    </a>
+                </div>
 
                 @if ($customer->addresses->isNotEmpty())
                     @foreach ($customer->addresses as $i => $address)

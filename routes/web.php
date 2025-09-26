@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::view('/products', 'products')->name('products');
 
-    Route::resource('/address', AddressController::class)->only(['edit', 'update', 'destroy']);
+    Route::resource('/address', AddressController::class)->only(['create', 'store', 'edit', 'update', 'destroy']);
     // OLD
     // Route::get('/address/{address}/edit', [AddressController::class, 'edit'])->name('address.edit');
     // Route::patch('/address/{address}/edit', [AddressController::class, 'update'])->name('address.update');
