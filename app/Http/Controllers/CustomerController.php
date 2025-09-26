@@ -14,10 +14,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::paginate(10);
 
-        // hide id from each model inside the paginator
-        $customers->getCollection()->transform(fn ($customer) => $customer->makeHidden('id'));
-
-        return view('customers', ['customers' => $customers]);
+        return view('customer.overview', ['customers' => $customers]);
     }
 
     /**
@@ -41,7 +38,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('customer.show', ['customer_id' => $id]);
     }
 
     /**

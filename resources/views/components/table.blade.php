@@ -1,8 +1,6 @@
-@props(['name', 'columns', 'objects'])
-
+@props(['name', 'columns', 'objects', 'route'])
 
 <div class="flex flex-row items-center w-full space-y-6">
-
     <!-- Voorbeeld tabel -->
     <div class="w-full p-6 bg-white shadow rounded-xl">
         <h3 class="mb-4 text-xl font-bold text-gray-800">
@@ -15,6 +13,9 @@
                         @foreach ($columns as $column)
                             <th class="px-4 py-2 border">{{ $column }}</th>
                         @endforeach
+                        <th class="px-4 py-2 border">View</th>
+                        <th class="px-4 py-2 border">Edit</th>
+                        <th class="px-4 py-2 border">Delete</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -22,6 +23,8 @@
                         <tr>
                             @php
                                 $object = collect($object);
+                                $id = $object->get('id');
+                                $object = $object->except('id');
                                 $created_at = \Carbon\Carbon::parse($object->get('created_at'))->format('d-m-Y');
                                 $updated_at = \Carbon\Carbon::parse($object->get('updated_at'))->format('d-m-Y');
                                 $object = $object->toarray();
@@ -31,6 +34,16 @@
                             @foreach ($object as $thing)
                                 <td class="px-4 py-2 border">{{ $thing }}</td>
                             @endforeach
+                            <td class="px-4 py-2 border">
+                                <a href="{{ route($route . '.show', $id) }}"
+                                    class="text-green-400 hover:underline hover:cursor-pointer">view</a>
+                            </td>
+                            <td class="px-4 py-2 border">
+                                <a href="#" class="text-orange-600 hover:underline hover:cursor-pointer">edit</a>
+                            </td>
+                            <td class="px-4 py-2 border">
+                                <a href="#" class="text-red-800 hover:underline hover:cursor-pointer">delete</a>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
