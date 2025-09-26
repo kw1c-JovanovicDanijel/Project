@@ -46,7 +46,9 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customer = Customer::find($id);
+
+        return view('customer.edit', ['id' => $customer->id]);
     }
 
     /**
@@ -54,7 +56,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $customer = Customer::find($id);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+        ]);
+
+        $customer->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        return to_route('customer.show', $customer);
     }
 
     /**
@@ -62,6 +76,12 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd();
+        $customer = Customer::find($id);
+        if ($customer) {
+            $customer->delete();
+        }
+
+        return to_route('customer.overview');
     }
 }

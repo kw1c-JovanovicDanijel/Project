@@ -13,9 +13,8 @@
                         @foreach ($columns as $column)
                             <th class="px-4 py-2 border">{{ $column }}</th>
                         @endforeach
-                        <th class="px-4 py-2 border">View</th>
-                        <th class="px-4 py-2 border">Edit</th>
-                        <th class="px-4 py-2 border">Delete</th>
+                        <th class="px-4 py-2 border">Bekijk</th>
+                        <th class="px-4 py-2 border">Verander</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -36,13 +35,11 @@
                             @endforeach
                             <td class="px-4 py-2 border">
                                 <a href="{{ route($route . '.show', $id) }}"
-                                    class="text-green-400 hover:underline hover:cursor-pointer">view</a>
+                                    class="text-green-400 hover:underline hover:cursor-pointer">bekijk</a>
                             </td>
                             <td class="px-4 py-2 border">
-                                <a href="#" class="text-orange-600 hover:underline hover:cursor-pointer">edit</a>
-                            </td>
-                            <td class="px-4 py-2 border">
-                                <a href="#" class="text-red-800 hover:underline hover:cursor-pointer">delete</a>
+                                <a href="{{ route($route . '.edit', $id) }}"
+                                    class="text-orange-600 hover:underline hover:cursor-pointer">verander</a>
                             </td>
                         </tr>
                     @endforeach

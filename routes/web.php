@@ -20,6 +20,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
     Route::get('/customers', [CustomerController::class, 'index'])->name('customer.overview');
     Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customer.show');
+    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::patch('/customers/{customer}', [CustomerController::class, 'update'])->name('customer.update');
+    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
 
     Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
 

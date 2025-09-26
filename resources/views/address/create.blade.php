@@ -1,6 +1,5 @@
 <x-layout>
     @php
-        // Bepaal de cancel URL op basis van type en ID
         if ($addressable_type == App\Models\Customer::class) {
             $cancelUrl = route('customer.show', $addressable_id);
         } elseif ($addressable_type == App\Models\Supplier::class) {
@@ -26,7 +25,6 @@
             <form method="POST" action="{{ route('address.store') }}">
                 @csrf
 
-                <!-- Hidden inputs voor parent -->
                 <input type="hidden" name="addressable_type" value="{{ $addressable_type }}">
                 <input type="hidden" name="addressable_id" value="{{ $addressable_id }}">
 
