@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Customer;
+use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,12 +18,20 @@ class AddressFactory extends Factory
      */
     public function definition(): array
     {
+        $isCustomer = fake()->boolean(50);
+
         return [
             'house_number' => rand(1, 80).fake()->randomElement([null, 'a', 'b', 'c']),
             'street_name' => fake()->streetName(),
             'zip_code' => fake()->postcode(),
             'city' => fake()->city(),
-            'customer_id' => Customer::factory(),
+            'addressable_id' => $isCustomer
+                                    ? Customer::factory()
+                                    : Supplier::factory(),
+            'addressable_type' => $isCustomer
+            ? Customer::class
+            : Supplier::class,
+
         ];
     }
 }

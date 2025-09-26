@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Customer::factory(100)
-            ->has(Address::factory(3))
+            ->has(Address::factory(rand(1, 3)))
             ->create();
     }
 }
