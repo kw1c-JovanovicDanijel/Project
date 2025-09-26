@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Customer extends Model
 {
     /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
-    public function addresses(): HasMany
+    // TODO: Copy this to suppliers when done
+    public function addresses()
     {
-        return $this->hasMany(Address::class);
+        return $this->morphMany(Address::class, 'addressable');
     }
 }
