@@ -6,7 +6,7 @@ use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Supplier;
 use App\Models\User;
-use App\UserRoles;
+use App\Enums\UserRoles;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
