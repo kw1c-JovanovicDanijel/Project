@@ -21,18 +21,17 @@ class AddressFactory extends Factory
         $isCustomer = fake()->boolean(50);
 
         return [
-            'house_number'    => rand(1, 80) . fake()->randomElement([null, 'a', 'b', 'c']),
-            'street_name'     => fake()->streetName(),
-            'zip_code'        => fake()->postcode(),
-            'city'            => fake()->city(),
-            'addressable_id'  => $isCustomer
-                                    ? Customer::inRandomOrder()->first()?->id ?? Customer::factory()
-                                    : Supplier::inRandomOrder()->first()?->id ?? Supplier::factory()
-                                    ,
-            'addressable_type'=> $isCustomer 
-            ? Customer::class 
+            'house_number' => rand(1, 80).fake()->randomElement([null, 'a', 'b', 'c']),
+            'street_name' => fake()->streetName(),
+            'zip_code' => fake()->postcode(),
+            'city' => fake()->city(),
+            'addressable_id' => $isCustomer
+                                    ? Customer::factory()
+                                    : Supplier::factory(),
+            'addressable_type' => $isCustomer
+            ? Customer::class
             : Supplier::class,
-            
+
         ];
     }
 }

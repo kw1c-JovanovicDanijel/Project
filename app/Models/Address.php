@@ -16,9 +16,8 @@ class Address extends Model
         return $this->morphTo(Customer::class);
     }
 
-    // TODO: When suppliers are added do this
-    // public function supplier(): MorphTo
-    // {
-    //     return $this->morphTo(Supplier::class);
-    // }
+    public function supplier(): MorphTo
+    {
+        return $this->morphTo(Supplier::class);
+    }
 }
