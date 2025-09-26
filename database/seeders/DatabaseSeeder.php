@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Address;
 use App\Models\Customer;
+use App\Models\Supplier;
 use App\Models\User;
 use App\UserRoles;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -52,8 +53,12 @@ class DatabaseSeeder extends Seeder
             'role' => UserRoles::LOGISTIEK_MANAGER,
         ]);
 
-        Customer::factory(100)
-            ->has(Address::factory(rand(1, 3)))
-            ->create();
+        Address::factory(100)->create();
+//        Customer::factory(100)
+//            ->has(Address::factory(rand(1, 3)))
+//            ->create();
+//        Supplier::factory(100)
+//            ->has(Address::factory(rand(1, 3)))
+//            ->create();
     }
 }

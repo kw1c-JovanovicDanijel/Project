@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('zip_code');
             $table->string('city');
             $table->morphs('addressable');
+            // dit maakt de volgende dingen : addressable_id
+            // addressable_type
             $table->timestamps();
         });
     }
