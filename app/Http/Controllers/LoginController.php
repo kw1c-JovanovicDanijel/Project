@@ -42,14 +42,4 @@ class LoginController extends Controller
         // redirect
         return to_route('home');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(): RedirectResponse
-    {
-        Auth::logout();
-
-        return to_route('home');
-    }
 }
