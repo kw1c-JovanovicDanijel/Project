@@ -22,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.create');
     }
 
     /**
@@ -30,7 +30,17 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:customers,email'],
+        ]);
+
+        Customer::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        return to_route('customer.overview');
     }
 
     /**

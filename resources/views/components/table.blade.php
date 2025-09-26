@@ -1,11 +1,17 @@
 @props(['name', 'columns', 'objects', 'route'])
 
-<div class="flex flex-row items-center w-full space-y-6">
+<div class="flex flex-col w-full space-y-6">
+    <!-- Header met Create knop -->
+    <div class="flex justify-between items-center pt-5 px-5">
+        <h3 class="text-xl font-bold text-gray-800">{{ $name }}</h3>
+        <a href="{{ route($route . '.create') }}"
+            class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm transition">
+            + Nieuw
+        </a>
+    </div>
+
     <!-- Voorbeeld tabel -->
     <div class="w-full p-6 bg-white shadow rounded-xl">
-        <h3 class="mb-4 text-xl font-bold text-gray-800">
-            {{ $name }}
-        </h3>
         <div class="overflow-x-auto">
             <table class="w-full text-left border border-gray-200">
                 <thead class="text-gray-700 bg-gray-100">
@@ -26,7 +32,7 @@
                                 $object = $object->except('id');
                                 $created_at = \Carbon\Carbon::parse($object->get('created_at'))->format('d-m-Y');
                                 $updated_at = \Carbon\Carbon::parse($object->get('updated_at'))->format('d-m-Y');
-                                $object = $object->toarray();
+                                $object = $object->toArray();
                                 $object['created_at'] = $created_at;
                                 $object['updated_at'] = $updated_at;
                             @endphp
@@ -50,5 +56,4 @@
             </div>
         </div>
     </div>
-
 </div>
