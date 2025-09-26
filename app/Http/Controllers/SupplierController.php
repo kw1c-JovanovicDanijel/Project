@@ -12,7 +12,14 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::paginate(10);
+
+        // hide id from each model inside the paginator
+        $suppliers->getCollection()->transform(function ($supplier) {
+            return $supplier->makeHidden('id');
+        });
+
+        return view('suppliers', ['suppliers' => $suppliers]);
     }
 
     /**
