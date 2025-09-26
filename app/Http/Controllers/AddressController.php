@@ -11,14 +11,6 @@ use Illuminate\Support\Facades\URL;
 class AddressController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
@@ -78,14 +70,6 @@ class AddressController extends Controller
         }
 
         return to_route('home');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Address $address)
-    {
-        //
     }
 
     /**
