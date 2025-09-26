@@ -3,7 +3,7 @@
 $customers;
 $name = 'Klanten overzicht';
 $columns = ['naam', 'email', 'gemaakt op', 'geupdate op'];
-$route = 'customer';
+$route = 'customers';
 ?>
 <x-layout>
     <x-nav>

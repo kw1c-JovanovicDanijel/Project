@@ -70,7 +70,7 @@ class AddressController extends Controller
 
         // Redirect naar juiste parent
         if ($address->addressable_type == Customer::class) {
-            return to_route('customer.show', $address->addressable_id);
+            return to_route('customers.show', $address->addressable_id);
         }
 
         if ($address->addressable_type == Supplier::class) {
@@ -116,7 +116,7 @@ class AddressController extends Controller
         ]);
 
         if ($address->addressable_type == Customer::class) {
-            return to_route('customer.show', $address->addressable_id);
+            return to_route('customers.show', $address->addressable_id);
         }
 
         if ($address->addressable_type == Supplier::class) {
@@ -132,7 +132,7 @@ class AddressController extends Controller
         $address->delete();
 
         if ($address->addressable_type == Customer::class) {
-            return to_route('customer.show', $address->addressable_id);
+            return to_route('customers.show', $address->addressable_id);
         }
 
         if ($address->addressable_type == Supplier::class) {

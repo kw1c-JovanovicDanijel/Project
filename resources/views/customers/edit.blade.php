@@ -1,8 +1,8 @@
 <x-layout>
     @php
         $customer = \App\Models\Customer::find($id);
-        $showUrl = route('customer.show', $customer);
-        $indexUrl = route('customer.overview');
+        $showUrl = route('customers.show', $customer);
+        $indexUrl = route('customers.index');
     @endphp
 
     <div
@@ -14,7 +14,7 @@
                 <h2 class="text-base font-semibold text-[#ff9900]">Bewerk {{ $customer->name }}</h2>
             </div>
 
-            <form method="POST" action="{{ route('customer.update', $customer) }}">
+            <form method="POST" action="{{ route('customers.update', $customer) }}">
                 @csrf
                 @method('PATCH')
 
@@ -63,7 +63,7 @@
                                 <h3 class="text-lg font-bold text-[#ff9900]">Weet je het zeker?</h3>
                                 <p class="text-gray-300">Dit kan niet ongedaan worden gemaakt.</p>
                                 <div class="flex justify-center gap-3 mt-4">
-                                    <form method="POST" action="{{ route('customer.destroy', $customer) }}">
+                                    <form method="POST" action="{{ route('customers.destroy', $customer) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

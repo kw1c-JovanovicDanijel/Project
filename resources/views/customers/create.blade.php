@@ -14,7 +14,7 @@
             </div>
 
             <!-- Form -->
-            <form method="POST" action="{{ route('customer.store') }}">
+            <form method="POST" action="{{ route('customers.store') }}">
                 @csrf
 
                 <div class="px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -44,7 +44,7 @@
                         Opslaan
                     </button>
 
-                    <a href="{{ route('customer.overview') }}"
+                    <a href="{{ route('customers.index') }}"
                         class="hover:cursor-pointer px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-sm flex items-center justify-center">
                         Annuleren
                     </a>

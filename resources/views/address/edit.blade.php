@@ -1,7 +1,7 @@
 <x-layout>
     @php
         if ($address->addressable_type == App\Models\Customer::class) {
-            $cancelUrl = route('customer.show', $address->addressable_id);
+            $cancelUrl = route('customers.show', $address->addressable_id);
         }
         if ($address->addressable_type == App\Models\Supplier::class) {
             $cancelUrl = route('supplier.show', $address->addressable_id);

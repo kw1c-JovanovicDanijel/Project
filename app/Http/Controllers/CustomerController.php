@@ -14,7 +14,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::paginate(10);
 
-        return view('customer.overview', ['customers' => $customers]);
+        return view('customers.index', ['customers' => $customers]);
     }
 
     /**
@@ -22,7 +22,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        return view('customers.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class CustomerController extends Controller
             'email' => $request->input('email'),
         ]);
 
-        return to_route('customer.overview');
+        return to_route('customers.index');
     }
 
     /**
@@ -48,7 +48,7 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        return view('customer.show', ['customer_id' => $id]);
+        return view('customers.show', ['customer_id' => $id]);
     }
 
     /**
@@ -58,7 +58,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::find($id);
 
-        return view('customer.edit', ['id' => $customer->id]);
+        return view('customers.edit', ['id' => $customer->id]);
     }
 
     /**
@@ -78,7 +78,7 @@ class CustomerController extends Controller
             'email' => $request->input('email'),
         ]);
 
-        return to_route('customer.show', $customer);
+        return to_route('customers.show', $customer);
     }
 
     /**
@@ -92,6 +92,6 @@ class CustomerController extends Controller
             $customer->delete();
         }
 
-        return to_route('customer.overview');
+        return to_route('customers.index');
     }
 }
