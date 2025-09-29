@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Enums\UserRoles;
 use App\Models\Address;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -51,8 +53,25 @@ class DatabaseSeeder extends Seeder
             'role' => UserRoles::LOGISTIEK_MANAGER,
         ]);
 
-        Address::factory(100)->create();
+        Supplier::factory(100)->has(
+            Address::factory(3))
+            ->create();
 
-        Product::factory(100)->create();
+        $products = Product::factory(200)->create();
+
+        Order::factory(100)->create()->each(function (Order $order) use ($products) {
+            $randomProducts = $products->random(rand(1, 5));
+
+            $order->products()->attach(
+                $randomProducts->mapWithKeys(fn (Product $product) => [
+                    $product->id => [
+                        'quantity' => rand(1, 10),
+                        'price' => $product->sell_price,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ],
+                ])->toArray()
+            );
+        });
     }
 }

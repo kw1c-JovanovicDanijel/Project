@@ -19,7 +19,7 @@ return new class extends Migration
             $table->float('buy_price');
             $table->float('sell_price');
             $table->foreignIdFor(Supplier::class)->constrained();
-//            $table->foreignId('supplier_id')->constrained();
+            //            $table->foreignId('supplier_id')->constrained();
             $table->timestamps();
         });
     }
