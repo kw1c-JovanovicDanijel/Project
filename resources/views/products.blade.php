@@ -1,9 +1,0 @@
-@php
-    $columns = ['Naam', 'E-Mail', 'Telefoon nummer', 'Gemaakt Op', 'Geupdate Op'];
-    $name = 'Leveranciers';
-@endphp
-<x-layout>
-    <x-nav>
-        <x-table :name="$name" :objects="$products" :columns="$columns" />
-    </x-nav>
-</x-layout>

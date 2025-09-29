@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -22,14 +23,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/customers', CustomerController::class);
 
     Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
-    Route::get('/products', [ProductController::class, 'index'])->name('products');
+    Route::resource('/products', ProductController::class);
 
 
     Route::view('/orders', 'orders')->name('orders');
     Route::view('/companyorders', 'companyorders')->name('companyorders');
     Route::view('/invoices', 'invoices')->name('invoices');
 
-    Route::view('/products', 'products')->name('products');
 
     Route::resource('/address', AddressController::class)->except(['index', 'show']);
 });

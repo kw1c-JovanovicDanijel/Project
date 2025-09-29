@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\UserRoles;
 use App\Models\Address;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -51,5 +52,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Address::factory(100)->create();
+
+        Product::factory(100)->create();
     }
 }

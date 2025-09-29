@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,12 +15,14 @@ class ProductController extends Controller
     {
         $products = Product::paginate(10);
 
-        // hide id from each model inside the paginator
-        $products->getCollection()->transform(function ($product) {
-            return $product->makeHidden('id');
+
+        $products->getCollection()->map(function ($product) {
+            $product->supplier_id = Supplier::find($product->supplier_id)->name;
+            return $product;
         });
 
-        return view('products', ['products' => $products]);
+
+        return view('products.index', ['products' => $products]);
     }
 
     /**
@@ -43,7 +46,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('products.show', ['product' => $product]);
     }
 
     /**

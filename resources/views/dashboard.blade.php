@@ -5,7 +5,6 @@ $name = 'jdididhidhi'
 <x-layout>
     <x-nav>
 
-   <x-table :name="$name" :objects="$objects" :columns="$columns"  />
 
     </x-nav>
 
