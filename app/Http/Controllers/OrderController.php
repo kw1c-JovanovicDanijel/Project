@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::withSum('products as product_count', 'order_product.quantity')
+            ->paginate(10);
+
+        $orders->map(fn ($order) => $order->customer_id = Customer::find($order->customer_id)->name);
+
+        return view('orders.index', ['orders' => $orders]);
+
     }
 
     /**

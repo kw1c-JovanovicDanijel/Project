@@ -4,6 +4,7 @@ use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
@@ -24,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
     Route::resource('/products', ProductController::class);
 
-    Route::view('/orders', 'orders')->name('orders');
+    Route::resource('/orders', OrderController::class);
     Route::view('/companyorders', 'companyorders')->name('companyorders');
     Route::view('/invoices', 'invoices')->name('invoices');
 
