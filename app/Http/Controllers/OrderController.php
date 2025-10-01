@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\OrderStatus;
 use App\Models\Customer;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -71,7 +72,12 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('orders.edit', [$order]);
+        $products = Product::all();
+
+        return view('orders.edit', [
+            'order' => $order->load('products'), // laad producten met pivot
+            'products' => $products,
+        ]);
     }
 
     /**
@@ -79,7 +85,35 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        dd('update method');
+        // check of het gaat om toevoegen of verwijderen
+        if ($request->has('remove_product_id')) {
+            $order->products()->detach($request->remove_product_id);
+        } elseif ($request->has('product_id') && $request->has('quantity')) {
+            $request->validate([
+                'product_id' => 'required|exists:products,id',
+                'quantity' => 'required|integer|min:1',
+            ]);
+
+            $product = Product::find($request->product_id);
+
+            // als product al bestaat in de order → update quantity
+            if ($order->products->contains($product->id)) {
+                $order->products()->updateExistingPivot($product->id, [
+                    'quantity' => $request->quantity,
+                    'price' => $product->sell_price,
+                    'updated_at' => now(),
+                ]);
+            } else {
+                $order->products()->attach($product->id, [
+                    'quantity' => $request->quantity,
+                    'price' => $product->sell_price,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        return redirect()->route('orders.edit', $order);
     }
 
     /**
