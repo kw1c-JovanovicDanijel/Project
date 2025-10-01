@@ -16,7 +16,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::withSum('products as product_count', 'order_product.quantity')
-            ->whereStatus(\App\Enums\OrderStatus::BEZIG)
+            // bezig() doet hetzelfde als de where, maar door een scope op de model
+            ->bezig()
+            // ->whereStatus(\App\Enums\OrderStatus::BEZIG)
             ->paginate(10);
 
         $orders->getCollection()->transform(function ($order) {
