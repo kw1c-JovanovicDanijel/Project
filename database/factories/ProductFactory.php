@@ -22,8 +22,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->word(),
             'description' => fake()->text(),
-            'buy_price' => fake()->numberBetween(1, 5),
-            'sell_price' => fake()->numberBetween(10, 50),
+            'buy_price' => fake()->randomFloat(2, 0, 999),
             'supplier_id' => Supplier::factory(),
         ];
 

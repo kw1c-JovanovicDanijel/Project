@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -12,14 +13,9 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::paginate(10);
+        $suppliers = supplier::paginate(10);
 
-        // hide id from each model inside the paginator
-        $suppliers->getCollection()->transform(function ($supplier) {
-            return $supplier->makeHidden('id');
-        });
-
-        return view('suppliers', ['suppliers' => $suppliers]);
+        return view('suppliers.index', ['suppliers' => $suppliers]);
     }
 
     /**
@@ -27,7 +23,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('suppliers.create');
     }
 
     /**
@@ -35,7 +31,19 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', 'unique:suppliers,email'],
+            'phone_number' => ['required', 'string', 'max:255'],
+        ]);
+
+        $supplier = Supplier::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone_number' => $request->input('phone_number'),
+        ]);
+
+        return to_route('suppliers.show' , ['supplier' => $supplier]);
     }
 
     /**
@@ -43,30 +51,51 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return view('suppliers.show', ['supplier' => $supplier]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Supplier $supplier)
+    public function edit(string $id)
     {
-        //
+        $supplier = Supplier::find($id);
+
+        return view('suppliers.edit', ['supplier' => $supplier]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, string $id)
     {
-        //
+        $supplier = supplier::find($id);
+
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone_number' => ['required', 'string', 'max:255'],
+        ]);
+
+        $supplier->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone_number' => $request->input('phone_number'),
+        ]);
+
+        return to_route('suppliers.show', $supplier);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(string $id)
     {
-        //
+        $supplier = supplier::find($id);
+        if ($supplier) {
+            $supplier->delete();
+        }
+
+        return to_route('suppliers.index');
     }
 }

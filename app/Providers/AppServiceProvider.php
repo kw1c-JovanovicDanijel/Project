@@ -22,5 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // Makes it so you don't have to fill in the $fillable fields in every model when inserting data
         Model::unguard();
+
+       Model::automaticallyEagerLoadRelationships();
     }
 }

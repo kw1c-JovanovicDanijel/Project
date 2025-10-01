@@ -9,16 +9,14 @@
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6">
                 <h2 class="text-base font-semibold text-[#ff9900]">
-                    Nieuw product aanmaken
+                    Nieuwe klant aanmaken
                 </h2>
             </div>
 
             <!-- Form -->
-            <form method="POST" action="{{ route('products.store') }}">
+            <form method="POST" action="{{ route('suppliers.store') }}">
                 @csrf
                 <div class="px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                    <!-- Naam -->
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-300">
                             Naam
@@ -28,41 +26,23 @@
                                       shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
                     </div>
 
-                    <!-- Beschrijving -->
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-300">
-                            Beschrijving
+                        <label for="email" class="block text-sm font-medium text-gray-300">
+                            Email
                         </label>
-                        <input name="description" value="{{ old('description') }}" type="text" id="description"
-                               class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white
-                                      shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
-                    </div>
-
-                    <!-- Inkoop prijs -->
-                    <div>
-                        <label for="buy_price" class="block text-sm font-medium text-gray-300">
-                            Inkoop prijs
-                        </label>
-                        <input name="buy_price" value="{{ old('buy_price') }}" type="number" step="0.01" id="buy_price"
+                        <input name="email" value="{{ old('email') }}" type="email" id="email"
                                class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white
                                       shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
                     </div>
 
                     <div>
-                        <label for="supplier" class="block text-sm font-medium text-gray-300">
-                            Leverancier
+                        <label for="phone_number" class="block text-sm font-medium text-gray-300">
+                            phone_number
                         </label>
-                        <select name="supplier_id" id="supplier"
-                                class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white
-                   shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5">
-                            @foreach($suppliers as $supplier)
-                                <option value="{{ $supplier->id }}">
-                                    {{ $supplier->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                        <input name="phone_number" value="{{ old('phone_number') }}" type="text" id="phone_number"
+                               class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white
+                                      shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
                     </div>
-
                 </div>
 
                 <!-- Footer -->
@@ -72,7 +52,7 @@
                         Opslaan
                     </button>
 
-                    <a href="{{ route('products.index') }}"
+                    <a href="{{ route('suppliers.index') }}"
                        class="hover:cursor-pointer px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-sm flex items-center justify-center">
                         Annuleren
                     </a>
