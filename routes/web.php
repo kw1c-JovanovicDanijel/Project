@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProductController;
@@ -19,17 +20,15 @@ Route::post('/login', [LoginController::class, 'store'])->middleware(['guest'])-
 Route::post('/logout', LogoutController::class)->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::view('/dashboard', 'dashboard')->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('/customers', CustomerController::class);
 
-    Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
     Route::resource('/products', ProductController::class);
-
+    Route::resource('/suppliers', SupplierController::class);
 
     Route::view('/orders', 'orders')->name('orders');
     Route::view('/companyorders', 'companyorders')->name('companyorders');
     Route::view('/invoices', 'invoices')->name('invoices');
-
 
     Route::resource('/address', AddressController::class)->except(['index', 'show']);
 });

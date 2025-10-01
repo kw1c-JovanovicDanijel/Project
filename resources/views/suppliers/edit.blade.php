@@ -1,7 +1,7 @@
 <x-layout>
     @php
-        $showUrl = route('products.show', $product);
-        $indexUrl = route('products.index');
+        $showUrl = route('suppliers.show', $supplier);
+        $indexUrl = route('suppliers.index');
     @endphp
 
     <div
@@ -11,47 +11,31 @@
 
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6">
-                <h2 class="text-base font-semibold text-[#ff9900]">Bewerk {{ $product->name }}</h2>
+                <h2 class="text-base font-semibold text-[#ff9900]">Bewerk {{ $supplier->name }}</h2>
             </div>
 
             <!--  Edit form -->
-            <form method="POST" action="{{ route('products.update', $product) }}">
+            <form method="POST" action="{{ route('suppliers.update', $supplier) }}">
                 @csrf
                 @method('PATCH')
 
                 <div class="px-6 py-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-300">Naam</label>
-                        <input name="name" value="{{ old('name', $product->name) }}" type="text" id="name"
+                        <input name="name" value="{{ old('name', $supplier->name) }}" type="text" id="name"
                                class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
                     </div>
 
                     <div>
-                        <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
-                        <input name="description" value="{{ old('description', $product->description) }}" type="text" id="description"
+                        <label for="email" class="block text-sm font-medium text-gray-300">email</label>
+                        <input name="email" value="{{ old('email', $supplier->email) }}" type="email" id="email"
                                class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
                     </div>
 
                     <div>
-                        <label for="buy_price" class="block text-sm font-medium text-gray-300">Buy Price</label>
-                        <input name="buy_price" value="{{ old('buy_price', $product->buy_price) }}" type="number" step="0.01" id="buy_price"
+                        <label for="phone_number" class="block text-sm font-medium text-gray-300">Telefoon nummer</label>
+                        <input name="phone_number" value="{{ old('phone_number', $supplier->phone_number) }}" type="text" step="0.01" id="phone_number"
                                class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5" />
-                    </div>
-
-                    <div>
-                        <label for="supplier" class="block text-sm font-medium text-gray-300">Supplier</label>
-                        <select name="supplier_id" id="supplier"
-                                class="mt-1 block w-full rounded-lg border border-gray-700 bg-gray-800 text-white shadow-sm focus:ring-2 focus:ring-[#ff9900] sm:text-sm sm:leading-6 px-3 py-1.5">
-                           @php
-                           $suppliers = \App\Models\Supplier::get();
-                           @endphp
-                            @foreach($suppliers as $supplier)
-                                <option value="{{ $supplier->id }}"
-                                    {{ old('supplier_id', $product->supplier_id) == $supplier->id ? 'selected' : '' }}>
-                                    {{ $supplier->name }}
-                                </option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
 
@@ -92,7 +76,7 @@
                             Annuleren
                         </label>
 
-                        <form method="POST" action="{{ route('products.destroy', $product) }}">
+                        <form method="POST" action="{{ route('suppliers.destroy', $supplier) }}">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
