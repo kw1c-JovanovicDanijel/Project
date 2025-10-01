@@ -26,7 +26,7 @@
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">👥 Klanten</a>
             <a href="{{ route('products.index') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">📦 Producten</a>
-            <a href="{{ route('orders') }}"
+            <a href="{{ route('orders.index') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">📝 Orders</a>
             <a href="{{ route('companyorders') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">🛍️ Bestellingen</a>

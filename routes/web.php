@@ -5,6 +5,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\OrderCompleteController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/products', ProductController::class);
     Route::resource('/suppliers', SupplierController::class);
 
-    Route::view('/orders', 'orders')->name('orders');
+    Route::resource('/orders', OrderController::class);
+    Route::patch('/orders/{order}/complete', OrderCompleteController::class)->name('orders.complete');
+
     Route::view('/companyorders', 'companyorders')->name('companyorders');
     Route::view('/invoices', 'invoices')->name('invoices');
 

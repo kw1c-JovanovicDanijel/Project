@@ -20,9 +20,10 @@ class Product extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    // TODO: when orders exist
-    //    public function order(): BelongsToMany
-    //    {
-    //        return $this->belongsToMany(Order::class);
-    //    }
+    public function order(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class)
+            ->withPivot('quantity', 'price', 'created_at', 'updated_at')
+            ->using(OrderProduct::class);
+    }
 }
