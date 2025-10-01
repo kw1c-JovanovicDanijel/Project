@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use function Pest\Laravel\get;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>

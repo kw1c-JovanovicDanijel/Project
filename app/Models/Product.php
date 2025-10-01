@@ -20,9 +20,9 @@ class Product extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-    //TODO: when orders exist
-//    public function order(): BelongsToMany
-//    {
-//        return $this->belongsToMany(Order::class);
-//    }
+    // TODO: when orders exist
+    //    public function order(): BelongsToMany
+    //    {
+    //        return $this->belongsToMany(Order::class);
+    //    }
 }

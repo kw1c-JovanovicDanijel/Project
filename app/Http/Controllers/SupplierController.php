@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -43,7 +42,7 @@ class SupplierController extends Controller
             'phone_number' => $request->input('phone_number'),
         ]);
 
-        return to_route('suppliers.show' , ['supplier' => $supplier]);
+        return to_route('suppliers.show', ['supplier' => $supplier]);
     }
 
     /**

@@ -12,12 +12,12 @@ class DashboardController extends Controller
     public function __invoke(): View
     {
         $totalCustomers = Customer::count();
-        $totalProducts  = Product::count();
+        $totalProducts = Product::count();
         $totalSuppliers = Supplier::count();
 
         // Stel doelen
         $customerGoal = 200; // doel voor nieuwe klanten deze maand
-        $productGoal  = 500; // totaal doel producten
+        $productGoal = 500; // totaal doel producten
         $supplierGoal = 200;  // totaal doel leveranciers
 
         // Dynamische berekeningen voor de progress bars
@@ -35,13 +35,13 @@ class DashboardController extends Controller
             : 0;
 
         return view('dashboard', [
-            'totalCustomers'       => $totalCustomers,
-            'totalProducts'        => $totalProducts,
-            'totalSuppliers'       => $totalSuppliers,
-            'customerGoal'         => $customerGoal,
-            'customerGrowthPercent'=> $customerGrowthPercent,
-            'productPercent'       => $productPercent,
-            'supplierPercent'      => $supplierPercent,
+            'totalCustomers' => $totalCustomers,
+            'totalProducts' => $totalProducts,
+            'totalSuppliers' => $totalSuppliers,
+            'customerGoal' => $customerGoal,
+            'customerGrowthPercent' => $customerGrowthPercent,
+            'productPercent' => $productPercent,
+            'supplierPercent' => $supplierPercent,
         ]);
     }
 }

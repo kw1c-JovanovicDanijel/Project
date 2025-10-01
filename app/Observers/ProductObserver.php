@@ -17,10 +17,7 @@ class ProductObserver
     /**
      * Handle the Product "updated" event.
      */
-    public function updated(Product $product): void
-    {
-
-    }
+    public function updated(Product $product): void {}
 
     /**
      * Handle the Product "deleted" event.
@@ -43,7 +40,7 @@ class ProductObserver
 
         $product->sell_price = $product->buy_price * 1.2;
 
-        $product->sell_price = round($product->sell_price ,2);
+        $product->sell_price = round($product->sell_price, 2);
 
     }
 
