@@ -22,8 +22,8 @@ class ProductController extends Controller
             $product->description = str($product->description)->limit(50);
             // hier zorg je ervoor dat er een euro teken komt voor de getallen bij de inkoop prijs en verkoop prijs
             // . zorgt ervoor dat de getallen worden geforceerd naar string zodat de euro teken erbij kan en dat je strings bij elkaar kan zetten
-            $product->buy_price = '€' . $product->buy_price;
-            $product->sell_price = '€' . $product->sell_price;
+            $product->buy_price = '€'.$product->buy_price;
+            $product->sell_price = '€'.$product->sell_price;
 
             return $product;
         });
