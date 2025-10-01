@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Customer::class);
-            $table->date('order_date');
+            $table->date('order_date')->nullable();
             $table->enum('status', OrderStatus::cases());
             $table->timestamps();
         });

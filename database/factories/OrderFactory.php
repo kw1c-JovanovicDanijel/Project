@@ -19,10 +19,12 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
+        $is_completed = fake()->boolean();
+
         return [
             'customer_id' => Customer::factory()->has(Address::factory(rand(1, 3))),
-            'order_date' => fake()->date('d-m-Y'),
-            'status' => fake()->randomElement(OrderStatus::cases()),
+            'order_date' => $is_completed ? fake()->date('d-m-Y') : null,
+            'status' => $is_completed ? OrderStatus::VERZONDEN : OrderStatus::BEZIG,
         ];
     }
 }

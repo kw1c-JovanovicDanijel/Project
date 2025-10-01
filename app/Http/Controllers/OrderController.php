@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\OrderStatus;
 use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Http\Request;
@@ -14,12 +15,17 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::withSum('products as product_count', 'order_product.quantity')
+            ->whereStatus(\App\Enums\OrderStatus::BEZIG)
             ->paginate(10);
 
-        $orders->map(fn ($order) => $order->customer_id = Customer::find($order->customer_id)->name);
+        $orders->getCollection()->transform(function ($order) {
+            $order->customer_id = Customer::find($order->customer_id)->name;
+            $order->makeHidden('order_date');
+
+            return $order;
+        });
 
         return view('orders.index', ['orders' => $orders]);
-
     }
 
     /**
@@ -27,7 +33,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**
@@ -35,7 +41,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => ['required'],
+        ]);
+
+        $order = Order::create([
+            'customer_id' => $request->input('customer_id'),
+            'status' => OrderStatus::BEZIG,
+            'order_date' => null,
+        ]);
+
+        return to_route('orders.show', $order);
     }
 
     /**
@@ -43,6 +59,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        if ($order->status === OrderStatus::VERZONDEN->name) {
+            return to_route('orders.index');
+        }
+
         return view('orders.show', ['order' => $order]);
     }
 
@@ -51,7 +71,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('orders.edit', [$order]);
     }
 
     /**
@@ -59,7 +79,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        dd('update method');
     }
 
     /**
@@ -67,6 +87,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+
+        return to_route('orders.index');
     }
 }
