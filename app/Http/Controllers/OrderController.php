@@ -78,7 +78,7 @@ class OrderController extends Controller
         $products = Product::all();
 
         return view('orders.edit', [
-            'order' => $order->load('products'), // laad producten met pivot
+            'order' => $order->load('products'),
             'products' => $products,
         ]);
     }

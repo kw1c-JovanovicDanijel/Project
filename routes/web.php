@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\AddressController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\OrderCompleteController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\AddressController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\CompanyOrderController;
+use App\Http\Controllers\OrderCompleteController;
 
 Route::get('/', function () {
     return Auth::check() ? to_route('dashboard') : view('home');
@@ -35,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/companyorders', 'companyorders')->name('companyorders');
 
     Route::resource('/address', AddressController::class)->except(['index', 'show']);
+    Route::resource('/company-orders', CompanyOrderController::class);
 });
 
 Route::get('/tinker', function () {

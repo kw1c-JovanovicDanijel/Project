@@ -6,6 +6,7 @@ use App\Enums\UserRoles;
 use App\Models\Address;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\CompanyOrder;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -70,6 +71,19 @@ class DatabaseSeeder extends Seeder
                         'created_at' => now(),
                         'updated_at' => now(),
                     ],
+                ])->toArray()
+            );
+        });
+
+        // CompanyOrder seeding
+        CompanyOrder::factory(50)->create()->each(function (CompanyOrder $order) use ($products) {
+            $randomProducts = $products->random(rand(1, 5));
+            $order->products()->attach(
+                $randomProducts->mapWithKeys(fn ($product) => [
+                    $product->id => [
+                        'quantity' => rand(1, 10),
+                        'price' => $product->buy_price,
+                    ]
                 ])->toArray()
             );
         });
