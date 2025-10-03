@@ -9,12 +9,12 @@
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6">
                 <h2 class="text-base font-semibold text-[#ff9900]">
-                    Order #{{ $order->id }} bewerken
+                    Order #{{ $companyOrder->id }} bewerken
                 </h2>
             </div>
 
             <!-- Producten toevoegen -->
-            <form method="POST" action="{{ route('orders.update', $order) }}" class="px-6 py-6">
+            <form method="POST" action="{{ route('orders.update', $companyOrder) }}" class="px-6 py-6">
                 @csrf
                 @method('PATCH')
 
@@ -54,13 +54,13 @@
             <!-- Producten in de order -->
             <div class="px-6 py-6">
                 <h3 class="text-lg font-bold text-[#ff9900] mb-4">Huidige producten</h3>
-                @if ($order->products->isNotEmpty())
+                @if ($companyOrder->products->isNotEmpty())
                     <ul class="space-y-2">
                         @php
                             $totalPrice = 0;
                         @endphp
 
-                        @foreach ($order->products as $product)
+                        @foreach ($companyOrder->products as $product)
                             @php
                                 $linePrice = $product->pivot->price * $product->pivot->quantity;
                                 $totalPrice += $linePrice;
@@ -76,7 +76,7 @@
                                     </span>
                                 </span>
 
-                                <form method="POST" action="{{ route('orders.update', $order) }}">
+                                <form method="POST" action="{{ route('orders.update', $companyOrder) }}">
                                     @csrf
                                     @method('PATCH')
                                     <input type="hidden" name="remove_product_id" value="{{ $product->id }}">
@@ -102,7 +102,7 @@
 
             <!-- Footer -->
             <div class="flex justify-end gap-3 px-6 pb-6">
-                <a href="{{ route('orders.show', ['order' => $order]) }}"
+                <a href="{{ route('company-orders.show', ['company_order' => $companyOrder]) }}"
                     class="hover:cursor-pointer px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-sm flex items-center justify-center">
                     Terug
                 </a>
