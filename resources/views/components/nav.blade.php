@@ -30,7 +30,7 @@
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">📝 Orders</a>
             <a href="{{ route('companyorders') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">🛍️ Bestellingen</a>
-            <a href="{{ route('invoices') }}"
+            <a href="{{ route('invoices.index') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">💰 Facturen</a>
             <a href="{{ route('suppliers.index') }}"
                 class="block px-4 py-2 transition rounded-lg hover:bg-orange-500 hover:text-white">🚚 Leveranciers</a>

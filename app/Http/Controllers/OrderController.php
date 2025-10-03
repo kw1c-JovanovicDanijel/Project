@@ -22,6 +22,7 @@ class OrderController extends Controller
         $orders->getCollection()->transform(function ($order) {
             $order->customer_id = Customer::find($order->customer_id)->name;
             $order->makeHidden('order_date');
+            $order->makeHidden('date_completed');
 
             return $order;
         });

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\OrderCompleteController;
@@ -23,6 +24,7 @@ Route::post('/logout', LogoutController::class)->name('logout');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::resource('/customers', CustomerController::class);
+    Route::resource('/invoices', InvoiceController::class);
 
     Route::resource('/products', ProductController::class);
     Route::resource('/suppliers', SupplierController::class);
@@ -31,7 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::patch('/orders/{order}/complete', OrderCompleteController::class)->name('orders.complete');
 
     Route::view('/companyorders', 'companyorders')->name('companyorders');
-    Route::view('/invoices', 'invoices')->name('invoices');
 
     Route::resource('/address', AddressController::class)->except(['index', 'show']);
 });

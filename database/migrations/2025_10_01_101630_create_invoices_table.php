@@ -1,7 +1,5 @@
 <?php
 
-use App\Enums\OrderStatus;
-use App\Models\Customer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Customer::class);
-            $table->date('order_date')->nullable();
-            $table->date('date_completed')->nullable();
-            $table->enum('status', OrderStatus::cases());
+            $table->foreignId('order_id')->constrained('orders');
+            $table->dateTime('paid_at');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('invoices');
     }
 };
