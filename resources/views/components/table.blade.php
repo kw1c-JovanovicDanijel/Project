@@ -2,6 +2,9 @@
 
 <div class="flex flex-col w-full space-y-6">
     <!-- Header met Create knop -->
+    {{-- @if (\Illuminate\Support\Facades\URL::current()->contains('invoices'))
+        @dd()
+    @endif --}}
     <div class="flex justify-between items-center pt-5 px-5">
         <h3 class="text-xl font-bold text-gray-800">{{ $name }}</h3>
         <a href="{{ route($route . '.create') }}"
