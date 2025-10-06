@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders');
-            $table->dateTime('paid_at');
+            $table->dateTime('paid_at')->nullable();
             $table->timestamps();
         });
     }

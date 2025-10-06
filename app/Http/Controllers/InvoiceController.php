@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 
@@ -28,15 +27,13 @@ class InvoiceController extends Controller
 
                 });
 
-
                 $paid_at = \Carbon\Carbon::parse($invoice->paid_at)->format('d-m-Y');
-
 
                 return [
                     'id' => $invoice->id,
                     'name' => $invoice->order->customer->name ?? '',
                     'product_count' => $totalQuantity,
-                    'total_price' => '€' . $totalPrice,
+                    'total_price' => '€'.$totalPrice,
                     'paid_at' => $paid_at,
                     'created_at' => $invoice->created_at,
                     'updated_at' => $invoice->updated_at,
@@ -46,8 +43,6 @@ class InvoiceController extends Controller
         return view('invoices.index', compact('invoices'));
 
     }
-
-
 
     /**
      * Show the form for creating a new resource.

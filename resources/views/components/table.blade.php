@@ -2,15 +2,12 @@
 
 <div class="flex flex-col w-full space-y-6">
     <!-- Header met Create knop -->
-    {{-- @if (\Illuminate\Support\Facades\URL::current()->contains('invoices'))
-        @dd()
-    @endif --}}
     <div class="flex justify-between items-center pt-5 px-5">
         <h3 class="text-xl font-bold text-gray-800">{{ $name }}</h3>
 
         @if (!Route::is('invoices.index'))
             <a href="{{ route($route . '.create') }}"
-               class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm transition">
+                class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm transition">
                 + Nieuw
             </a>
         @endif

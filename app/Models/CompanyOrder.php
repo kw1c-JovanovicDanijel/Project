@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Product;
 use App\Enums\OrderStatus;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class CompanyOrder extends Model
 {
     use HasFactory;
-
 
     public function products(): BelongsToMany
     {
@@ -21,7 +19,7 @@ class CompanyOrder extends Model
             ->withPivot('quantity', 'price', 'created_at', 'updated_at');
     }
 
-    // als je $order->bezig() aanroept terwijl het nog sql is, 
+    // als je $order->bezig() aanroept terwijl het nog sql is,
     // voert het dit op de achtergrond uit, en je kan je query nog verder bouwen
     #[Scope]
     public function bezig(Builder $query)

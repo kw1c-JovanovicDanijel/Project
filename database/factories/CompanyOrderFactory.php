@@ -15,7 +15,7 @@ class CompanyOrderFactory extends Factory
         $is_completed = fake()->boolean();
 
         return [
-            'order_date' => $is_completed ? fake()->date('Y-m-d') : null,
+            'order_date' => $is_completed ? fake()->dateTimeThisCentury() : null,
             'status' => $is_completed ? OrderStatus::VERZONDEN : OrderStatus::BEZIG,
         ];
     }

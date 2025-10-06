@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\OrderStatus;
 use App\Enums\UserRoles;
 use App\Models\Address;
+use App\Models\CompanyOrder;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\CompanyOrder;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -75,6 +76,14 @@ class DatabaseSeeder extends Seeder
             );
         });
 
+        Order::all()->each(function (Order $order) {
+            if (fake()->boolean()) {
+                $order->update([
+                    'status' => OrderStatus::VERZONDEN,
+                ]);
+            }
+        });
+
         // CompanyOrder seeding
         CompanyOrder::factory(50)->create()->each(function (CompanyOrder $order) use ($products) {
             $randomProducts = $products->random(rand(1, 5));
@@ -83,9 +92,10 @@ class DatabaseSeeder extends Seeder
                     $product->id => [
                         'quantity' => rand(1, 10),
                         'price' => $product->buy_price,
-                    ]
+                    ],
                 ])->toArray()
             );
         });
+
     }
 }

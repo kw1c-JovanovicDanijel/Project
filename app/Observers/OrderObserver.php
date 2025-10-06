@@ -21,16 +21,16 @@ class OrderObserver
      */
     public function updated(Order $order): void
     {
-        if ($order->invoice == null && $order->status == OrderStatus::VERZONDEN->name) {
+        if ($order->invoice == null) {
+            if ($order->status == OrderStatus::VERZONDEN->name || $order->status == OrderStatus::VERZONDEN) {
 
-            $is_paid = fake()->boolean();
+                $is_paid = fake()->boolean();
 
-            Invoice::create([
-                'order_id' => $order->id,
-                'is_paid' => $is_paid,
-                'paid_at' => $is_paid ? fake()->dateTime : null
-            ]);
-
+                Invoice::create([
+                    'order_id' => $order->id,
+                    'paid_at' => $is_paid ? fake()->dateTimeThisCentury() : null,
+                ]);
+            }
         }
     }
 
