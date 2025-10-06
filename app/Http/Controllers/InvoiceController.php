@@ -13,7 +13,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -70,7 +70,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 

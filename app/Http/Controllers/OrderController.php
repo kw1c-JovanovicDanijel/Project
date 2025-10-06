@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -42,7 +42,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -54,7 +54,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -76,7 +76,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -92,7 +92,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -109,7 +109,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -149,7 +149,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 

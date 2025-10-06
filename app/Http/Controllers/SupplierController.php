@@ -13,7 +13,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -27,7 +27,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -39,7 +39,7 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -63,7 +63,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -75,7 +75,7 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -89,7 +89,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -115,7 +115,7 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 

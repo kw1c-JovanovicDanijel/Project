@@ -16,7 +16,7 @@ class AddressController extends Controller
      */
     public function create(Request $request)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -47,7 +47,7 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -86,7 +86,7 @@ class AddressController extends Controller
      */
     public function edit(Address $address)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -98,7 +98,7 @@ class AddressController extends Controller
      */
     public function update(Request $request, Address $address)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
@@ -130,7 +130,7 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 

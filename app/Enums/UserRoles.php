@@ -9,4 +9,5 @@ enum UserRoles
     case BACKOFFICE_MEDEWERKER;
     case BACKOFFICE_MANAGER;
     case LOGISTIEK_MANAGER;
+    case ADMIN;
 }

@@ -14,7 +14,7 @@ class OrderCompleteController extends Controller
      */
     public function __invoke(Order $order)
     {
-        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name])) {
             return redirect()->route('dashboard');
         }
 
