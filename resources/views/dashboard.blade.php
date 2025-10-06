@@ -33,8 +33,8 @@
                 <!-- Leveranciers -->
                 <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 rounded-2xl shadow-lg">
                     <h2 class="text-sm font-medium">🤑 Geld gemaakt</h2>
-                    <p class="text-4xl font-bold mt-2">{{ '€'. $totalMoney }}</p>
-                    <span class="text-xs text-white/70">Actieve partners</span>
+                    <p class="text-4xl font-bold mt-2">{{ '€' . $totalMoney }}</p>
+                    <span class="text-xs text-white/70">in euro's</span>
                 </div>
 
                 <!-- Producten -->
@@ -73,7 +73,8 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Klantengroei</p>
                             <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $customerGrowthPercent }}%"></div>
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $customerGrowthPercent }}%">
+                                </div>
                             </div>
                             <span class="text-xs text-gray-500">{{ $customerGrowthPercent }}%</span>
                         </div>
@@ -87,7 +88,8 @@
                         <div>
                             <p class="text-sm font-medium text-gray-600">Samenwerkingen leveranciers</p>
                             <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
-                                <div class="bg-yellow-500 h-2 rounded-full" style="width: {{ $supplierPercent }}%"></div>
+                                <div class="bg-yellow-500 h-2 rounded-full" style="width: {{ $supplierPercent }}%">
+                                </div>
                             </div>
                             <span class="text-xs text-gray-500">{{ $supplierPercent }}%</span>
                         </div>
