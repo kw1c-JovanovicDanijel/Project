@@ -1,9 +1,8 @@
-
 <x-layout>
     <div class="h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 flex flex-col font-sans">
         <div class="flex-1 flex flex-col items-center justify-center text-center px-4">
             <h1 class="text-4xl font-extrabold text-[#ff9900] drop-shadow-lg mb-8">
-                Klant Overzicht
+                Leverancier Overzicht
             </h1>
 
             <div class="bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8 max-w-md w-full text-left">
@@ -11,10 +10,10 @@
                     {{ $supplier->name }}
                 </h2>
                 <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">email</span> {{ $supplier->email }}
+                    <span class="font-semibold text-gray-400">Email</span> {{ $supplier->email }}
                 </p>
                 <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">Telefoon nummer</span> {{ $supplier->phone_number }}
+                    <span class="font-semibold text-gray-400">Telefoonnummer</span> {{ $supplier->phone_number }}
                 </p>
                 <p class="text-gray-300 mb-2">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
@@ -25,16 +24,40 @@
                     {{ \Carbon\Carbon::parse($supplier->updated_at)->format('d-m-Y') }}
                 </p>
 
+                <h2 class="text-2xl font-bold text-[#ff9900] mt-10 mb-4">
+                    Adressen:
+                </h2>
+
+                @if ($supplier->addresses->isNotEmpty())
+                    @foreach ($supplier->addresses as $i => $address)
+                        <a href="{{ route('address.edit', $address) }}"
+                            class="block text-gray-300 mb-2 hover:text-[#ff9900] transition">
+                            <span class="font-semibold text-gray-400">Adres {{ $i + 1 }}:</span>
+                            {{ $address->street_name . ' ' . $address->house_number . ', ' . $address->city . ', ' . $address->zip_code }}
+                        </a>
+                    @endforeach
+                @else
+                    <p class="text-gray-400 italic">Geen adres beschikbaar</p>
+                @endif
+
+                <!-- Knop nieuw adres toevoegen -->
+                <div class="mt-4 flex justify-center">
+                    <a href="{{ route('address.create', ['addressable_type' => App\Models\Supplier::class, 'addressable_id' => $supplier->id]) }}"
+                        class="hover:cursor-pointer px-4 py-2 bg-green-600 hover:bg-green-500 text-white font-semibold rounded-lg shadow-sm">
+                        Nieuw adres toevoegen
+                    </a>
+                </div>
+
                 <div class="mt-6 flex justify-center gap-3 items-center">
                     <a href="{{ route('suppliers.edit', $supplier) }}"
-                       class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
+                        class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
                         Bewerken
                     </a>
 
                     <div class="relative flex items-center">
                         <input type="checkbox" id="delete-modal-toggle" class="hidden peer" />
                         <label for="delete-modal-toggle"
-                               class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-lg shadow-sm">
+                            class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-lg shadow-sm">
                             Verwijderen
                         </label>
 
@@ -48,12 +71,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                                class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg font-semibold">
+                                            class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg font-semibold">
                                             Ja, verwijderen
                                         </button>
                                     </form>
                                     <label for="delete-modal-toggle"
-                                           class="hover:cursor-pointer px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold cursor-pointer">
+                                        class="hover:cursor-pointer px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold cursor-pointer">
                                         Annuleren
                                     </label>
                                 </div>
@@ -64,7 +87,7 @@
             </div>
 
             <a href="{{ route('suppliers.index') }}"
-               class="mt-8 inline-block px-6 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
+                class="mt-8 inline-block px-6 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
                 Terug naar overzicht
             </a>
         </div>

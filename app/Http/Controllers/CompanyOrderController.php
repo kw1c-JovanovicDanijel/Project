@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Enums\UserRoles;
 use App\Models\CompanyOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -11,6 +12,10 @@ class CompanyOrderController extends Controller
 {
     public function index()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $orders = CompanyOrder::withSum('products as product_count', 'company_order_product.quantity')
             ->paginate(10);
 
@@ -25,11 +30,19 @@ class CompanyOrderController extends Controller
 
     public function create()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return $this->store();
     }
 
     public function store()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $order = CompanyOrder::create([
             'order_date' => null,
             'status' => OrderStatus::BEZIG,
@@ -40,11 +53,19 @@ class CompanyOrderController extends Controller
 
     public function show(CompanyOrder $companyOrder)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('company_orders.show', ['companyOrder' => $companyOrder]);
     }
 
     public function edit(CompanyOrder $companyOrder)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $products = Product::all();
 
         return view('company_orders.edit', [
@@ -55,6 +76,10 @@ class CompanyOrderController extends Controller
 
     public function update(Request $request, CompanyOrder $companyOrder)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         // Verwijderen van een product
         if ($request->has('remove_product_id')) {
             $companyOrder->products()->detach($request->remove_product_id);
@@ -92,6 +117,10 @@ class CompanyOrderController extends Controller
 
     public function destroy(CompanyOrder $companyOrder)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::LOGISTIEK_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $companyOrder->delete();
 
         return to_route('company-orders.index');

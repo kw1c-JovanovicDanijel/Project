@@ -1,9 +1,8 @@
-
 <x-layout>
     <div class="h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 flex flex-col font-sans">
         <div class="flex-1 flex flex-col items-center justify-center text-center px-4">
             <h1 class="text-4xl font-extrabold text-[#ff9900] drop-shadow-lg mb-8">
-                Klant Overzicht
+                Product Overzicht
             </h1>
 
             <div class="bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8 max-w-md w-full text-left">
@@ -20,7 +19,7 @@
                     <span class="font-semibold text-gray-400">Verkoop prijs</span> {{ $product->sell_price }}
                 </p>
                 <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">Leverancier</span> {{ $product->supplier->name}}
+                    <span class="font-semibold text-gray-400">Leverancier</span> {{ $product->supplier->name }}
                 </p>
                 <p class="text-gray-300 mb-2">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
@@ -33,14 +32,14 @@
 
                 <div class="mt-6 flex justify-center gap-3 items-center">
                     <a href="{{ route('products.edit', $product) }}"
-                       class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
+                        class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
                         Bewerken
                     </a>
 
                     <div class="relative flex items-center">
                         <input type="checkbox" id="delete-modal-toggle" class="hidden peer" />
                         <label for="delete-modal-toggle"
-                               class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-lg shadow-sm">
+                            class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-lg shadow-sm">
                             Verwijderen
                         </label>
 
@@ -54,12 +53,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                                class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg font-semibold">
+                                            class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg font-semibold">
                                             Ja, verwijderen
                                         </button>
                                     </form>
                                     <label for="delete-modal-toggle"
-                                           class="hover:cursor-pointer px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold cursor-pointer">
+                                        class="hover:cursor-pointer px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold cursor-pointer">
                                         Annuleren
                                     </label>
                                 </div>
@@ -70,7 +69,7 @@
             </div>
 
             <a href="{{ route('products.index') }}"
-               class="mt-8 inline-block px-6 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
+                class="mt-8 inline-block px-6 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
                 Terug naar overzicht
             </a>
         </div>

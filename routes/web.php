@@ -33,8 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/orders', OrderController::class);
     Route::patch('/orders/{order}/complete', OrderCompleteController::class)->name('orders.complete');
 
-    Route::view('/companyorders', 'companyorders')->name('companyorders');
-
     Route::resource('/address', AddressController::class)->except(['index', 'show']);
     Route::resource('/company-orders', CompanyOrderController::class);
 });

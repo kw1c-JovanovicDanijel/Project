@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoles;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -13,6 +14,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $products = Product::paginate(10);
 
         $products->getCollection()->map(function ($product) {
@@ -36,6 +41,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $suppliers = Supplier::all();
 
         return view('products.create', [
@@ -48,6 +57,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
@@ -70,6 +83,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('products.show', ['product' => $product]);
     }
 
@@ -78,6 +95,10 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $product = Product::find($id);
 
         return view('products.edit', ['product' => $product]);
@@ -88,6 +109,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
 
         $product = Product::find($id);
 
@@ -113,6 +137,10 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $product = product::find($id);
         if ($product) {
             $product->delete();
