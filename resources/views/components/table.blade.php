@@ -7,11 +7,15 @@
     @endif --}}
     <div class="flex justify-between items-center pt-5 px-5">
         <h3 class="text-xl font-bold text-gray-800">{{ $name }}</h3>
-        <a href="{{ route($route . '.create') }}"
-            class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm transition">
-            + Nieuw
-        </a>
+
+        @if (!Route::is('invoices.index'))
+            <a href="{{ route($route . '.create') }}"
+               class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm transition">
+                + Nieuw
+            </a>
+        @endif
     </div>
+
 
     <!-- Voorbeeld tabel -->
     <div class="w-full p-6 bg-white shadow rounded-xl">

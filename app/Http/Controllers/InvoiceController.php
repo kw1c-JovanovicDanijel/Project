@@ -23,8 +23,11 @@ class InvoiceController extends Controller
 
                 // totaal prijs (quantity * price)
                 $totalPrice = $invoice->order->products->sum(function ($product) {
+
                     return $product->pivot->quantity * $product->pivot->price;
+
                 });
+
 
                 $paid_at = \Carbon\Carbon::parse($invoice->paid_at)->format('d-m-Y');
 
@@ -33,7 +36,7 @@ class InvoiceController extends Controller
                     'id' => $invoice->id,
                     'name' => $invoice->order->customer->name ?? '',
                     'product_count' => $totalQuantity,
-                    'total_price' => $totalPrice,
+                    'total_price' => '€' . $totalPrice,
                     'paid_at' => $paid_at,
                     'created_at' => $invoice->created_at,
                     'updated_at' => $invoice->updated_at,
@@ -41,6 +44,7 @@ class InvoiceController extends Controller
             });
 
         return view('invoices.index', compact('invoices'));
+
     }
 
 
@@ -66,7 +70,7 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        return view('invoices.show', compact('invoice'));
     }
 
     /**
