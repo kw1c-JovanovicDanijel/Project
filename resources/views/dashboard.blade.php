@@ -57,7 +57,7 @@
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-                            {{ $totalOrders }} orders succesvol verwerkt
+                            {{ $totalCompanyOrders }} orders succesvol verzonden
                         </li>
                         <li class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
