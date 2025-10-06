@@ -17,23 +17,23 @@
                 </div>
 
                 <!-- Orders -->
-{{--                <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl shadow-lg">--}}
-{{--                    <h2 class="text-sm font-medium">📝 Orders</h2>--}}
-{{--                    <p class="text-4xl font-bold mt-2">{{ $totalOrders }}</p>--}}
-{{--                    <span class="text-xs text-white/70">Totaal geplaatst</span>--}}
-{{--                </div>--}}
+                <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6 rounded-2xl shadow-lg">
+                    <h2 class="text-sm font-medium">📝 Orders</h2>
+                    <p class="text-4xl font-bold mt-2">{{ $totalOrders }}</p>
+                    <span class="text-xs text-white/70">Bezig</span>
+                </div>
 
                 <!-- Bestellingen -->
-{{--                <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-2xl shadow-lg">--}}
-{{--                    <h2 class="text-sm font-medium">🛍️ Bestellingen</h2>--}}
-{{--                    <p class="text-4xl font-bold mt-2">{{ $totalCompanyOrders }}</p>--}}
-{{--                    <span class="text-xs text-white/70">Via bedrijven</span>--}}
-{{--                </div>--}}
+                <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-6 rounded-2xl shadow-lg">
+                    <h2 class="text-sm font-medium">📝 Orders</h2>
+                    <p class="text-4xl font-bold mt-2">{{ $totalCompanyOrders }}</p>
+                    <span class="text-xs text-white/70">Verzonden</span>
+                </div>
 
                 <!-- Leveranciers -->
-                <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-6 rounded-2xl shadow-lg">
-                    <h2 class="text-sm font-medium">🚚 Leveranciers</h2>
-                    <p class="text-4xl font-bold mt-2">{{ $totalSuppliers }}</p>
+                <div class="bg-gradient-to-r from-yellow-500 to-orange-500 text-white p-4 rounded-2xl shadow-lg">
+                    <h2 class="text-sm font-medium">🤑 Geld gemaakt</h2>
+                    <p class="text-4xl font-bold mt-2">{{ '€'. $totalMoney }}</p>
                     <span class="text-xs text-white/70">Actieve partners</span>
                 </div>
 
@@ -55,10 +55,10 @@
                             <span class="w-2 h-2 bg-green-500 rounded-full"></span>
                             {{ $totalCustomers }} klanten in totaal
                         </li>
-{{--                        <li class="flex items-center gap-2">--}}
-{{--                            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>--}}
-{{--                            {{ $totalOrders }} orders succesvol verwerkt--}}
-{{--                        </li>--}}
+                        <li class="flex items-center gap-2">
+                            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                            {{ $totalOrders }} orders succesvol verwerkt
+                        </li>
                         <li class="flex items-center gap-2">
                             <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
                             {{ $totalSuppliers }} leveranciers actief

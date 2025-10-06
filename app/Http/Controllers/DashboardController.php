@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyOrder;
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\View\View;
@@ -14,11 +16,20 @@ class DashboardController extends Controller
         $totalCustomers = Customer::count();
         $totalProducts = Product::count();
         $totalSuppliers = Supplier::count();
+        $totalOrders = Order::query()->bezig()->count();
+        $totalCompanyOrders = Order::query()->verzonden()->count();
+
+        $total = Order::query()
+            ->verzonden()
+            ->with('products')
+            ->get()
+            ->flatMap->products
+            ->sum(fn($product) => $product->pivot->price * $product->pivot->quantity);
 
         // Stel doelen
-        $customerGoal = 200; // doel voor nieuwe klanten deze maand
-        $productGoal = 500; // totaal doel producten
-        $supplierGoal = 200;  // totaal doel leveranciers
+        $customerGoal = 2000; // doel voor nieuwe klanten deze maand
+        $productGoal = 3000; // totaal doel producten
+        $supplierGoal = 4000;  // totaal doel leveranciers
 
         // Dynamische berekeningen voor de progress bars
         $newCustomersThisMonth = Customer::whereMonth('created_at', now()->month)->count();
@@ -38,6 +49,9 @@ class DashboardController extends Controller
             'totalCustomers' => $totalCustomers,
             'totalProducts' => $totalProducts,
             'totalSuppliers' => $totalSuppliers,
+            'totalMoney' => $total,
+            'totalOrders' => $totalOrders,
+            'totalCompanyOrders' => $totalCompanyOrders,
             'customerGoal' => $customerGoal,
             'customerGrowthPercent' => $customerGrowthPercent,
             'productPercent' => $productPercent,
