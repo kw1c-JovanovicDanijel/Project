@@ -3,7 +3,7 @@
         if ($addressable_type == App\Models\Customer::class) {
             $cancelUrl = route('customers.show', $addressable_id);
         } elseif ($addressable_type == App\Models\Supplier::class) {
-            $cancelUrl = route('supplier.show', $addressable_id);
+            $cancelUrl = route('suppliers.show', $addressable_id);
         } else {
             $cancelUrl = route('home');
         }

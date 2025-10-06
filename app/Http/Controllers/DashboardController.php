@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompanyOrder;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
@@ -24,7 +23,7 @@ class DashboardController extends Controller
             ->with('products')
             ->get()
             ->flatMap->products
-            ->sum(fn($product) => $product->pivot->price * $product->pivot->quantity);
+            ->sum(fn ($product) => $product->pivot->price * $product->pivot->quantity);
 
         // Stel doelen
         $customerGoal = 2000; // doel voor nieuwe klanten deze maand

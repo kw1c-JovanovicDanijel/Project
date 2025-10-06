@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoles;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,10 @@ class SupplierController extends Controller
      */
     public function index()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $suppliers = supplier::paginate(10);
 
         return view('suppliers.index', ['suppliers' => $suppliers]);
@@ -22,6 +27,10 @@ class SupplierController extends Controller
      */
     public function create()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('suppliers.create');
     }
 
@@ -30,6 +39,10 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:suppliers,email'],
@@ -50,6 +63,10 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('suppliers.show', ['supplier' => $supplier]);
     }
 
@@ -58,6 +75,10 @@ class SupplierController extends Controller
      */
     public function edit(string $id)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $supplier = Supplier::find($id);
 
         return view('suppliers.edit', ['supplier' => $supplier]);
@@ -68,6 +89,10 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $supplier = supplier::find($id);
 
         $request->validate([
@@ -90,6 +115,10 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $supplier = supplier::find($id);
         if ($supplier) {
             $supplier->delete();

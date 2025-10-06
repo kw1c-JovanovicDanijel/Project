@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
+use App\Enums\UserRoles;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
@@ -15,6 +16,10 @@ class OrderController extends Controller
      */
     public function index()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $orders = Order::withSum('products as product_count', 'order_product.quantity')
             // bezig() doet hetzelfde als de where, maar door een scope op de model
             ->bezig()
@@ -37,6 +42,10 @@ class OrderController extends Controller
      */
     public function create()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('orders.create');
     }
 
@@ -45,6 +54,10 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $request->validate([
             'customer_id' => ['required'],
         ]);
@@ -63,6 +76,10 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         if ($order->status === OrderStatus::VERZONDEN->name) {
             return to_route('orders.index');
         }
@@ -75,6 +92,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $products = Product::all();
 
         return view('orders.edit', [
@@ -88,6 +109,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         // check of het gaat om toevoegen of verwijderen
         if ($request->has('remove_product_id')) {
             $order->products()->detach($request->remove_product_id);
@@ -124,6 +149,10 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $order->delete();
 
         return to_route('orders.index');

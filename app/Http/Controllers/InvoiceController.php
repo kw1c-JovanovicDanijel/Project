@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoles;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,10 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $invoices = Invoice::with(['order.customer', 'order.products'])
             ->paginate(10)
             ->through(function ($invoice) {
@@ -65,6 +70,10 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MEDEWERKER->name, UserRoles::BACKOFFICE_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('invoices.show', compact('invoice'));
     }
 

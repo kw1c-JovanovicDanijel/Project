@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\UserRoles;
 use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Supplier;
@@ -15,6 +16,10 @@ class AddressController extends Controller
      */
     public function create(Request $request)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $previousUrl = URL::previous();
         $addressable_id = null;
         $addressable_type = null;
@@ -42,6 +47,10 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $request->validate([
             'house_number' => ['required', 'string', 'max:10'],
             'street_name' => ['required', 'string', 'max:255'],
@@ -66,7 +75,7 @@ class AddressController extends Controller
         }
 
         if ($address->addressable_type == Supplier::class) {
-            return to_route('supplier.show', $address->addressable_id);
+            return to_route('suppliers.show', $address->addressable_id);
         }
 
         return to_route('home');
@@ -77,6 +86,10 @@ class AddressController extends Controller
      */
     public function edit(Address $address)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         return view('address.edit', ['address' => $address]);
     }
 
@@ -85,6 +98,10 @@ class AddressController extends Controller
      */
     public function update(Request $request, Address $address)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $request->validate([
             'house_number' => ['required', 'string', 'max:10'],
             'street_name' => ['required', 'string', 'max:255'],
@@ -104,7 +121,7 @@ class AddressController extends Controller
         }
 
         if ($address->addressable_type == Supplier::class) {
-            return to_route('supplier.show', $address->addressable_id) ?? to_route('home');
+            return to_route('suppliers.show', $address->addressable_id) ?? to_route('home');
         }
     }
 
@@ -113,6 +130,10 @@ class AddressController extends Controller
      */
     public function destroy(Address $address)
     {
+        if (! in_array(auth()->user()->role, [UserRoles::ACCOUNT_MANAGER->name, UserRoles::PRODUCT_MANAGER->name])) {
+            return redirect()->route('dashboard');
+        }
+
         $address->delete();
 
         if ($address->addressable_type == Customer::class) {
@@ -120,7 +141,7 @@ class AddressController extends Controller
         }
 
         if ($address->addressable_type == Supplier::class) {
-            return to_route('supplier.show', $address->addressable_id) ?? to_route('home');
+            return to_route('suppliers.show', $address->addressable_id) ?? to_route('home');
         }
     }
 }
