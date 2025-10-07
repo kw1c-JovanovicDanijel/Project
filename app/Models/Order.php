@@ -25,6 +25,11 @@ class Order extends Model
             ->withPivot('quantity', 'price', 'created_at', 'updated_at');
     }
 
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(Invoice::class);
+    }
+
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
@@ -42,10 +47,5 @@ class Order extends Model
     public function verzonden(Builder $query)
     {
         return $query->whereStatus(OrderStatus::VERZONDEN);
-    }
-
-    public function invoice(): HasOne
-    {
-        return $this->hasOne(Invoice::class);
     }
 }

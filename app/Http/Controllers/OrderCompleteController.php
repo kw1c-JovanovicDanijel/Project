@@ -23,7 +23,7 @@ class OrderCompleteController extends Controller
             'order_date' => now(),
         ]);
 
-        return redirect()->route('orders.show', $order)
-            ->with('success', 'Order is afgerond!');
+        return redirect()->route('orders.show', $order);
+
     }
 }

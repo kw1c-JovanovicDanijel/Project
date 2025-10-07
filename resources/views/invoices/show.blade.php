@@ -1,12 +1,6 @@
-@php
-    // Zorg dat $order beschikbaar is als view alleen $invoice kreeg.
-    if (!isset($order) && isset($invoice)) {
-        $order = $invoice->order;
-        }
-@endphp
+
 
 <x-layout>
-
 
     <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 flex flex-col font-sans">
         <div class="flex-1 flex flex-col items-center justify-center text-center px-4">

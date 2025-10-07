@@ -14,7 +14,7 @@
     </div>
 
 
-    <!-- Voorbeeld tabel -->
+    <!-- tabel -->
     <div class="w-full p-6 bg-white shadow rounded-xl">
         <div class="overflow-x-auto">
             <table class="w-full text-left border border-gray-200">

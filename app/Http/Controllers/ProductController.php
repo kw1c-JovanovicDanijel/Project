@@ -20,6 +20,7 @@ class ProductController extends Controller
 
         $products = Product::paginate(10);
 
+        // map is een for each loop wat een array returnt aan data dan pakt die de eerste element
         $products->getCollection()->map(function ($product) {
             $product->supplier_id = Supplier::find($product->supplier_id)->name;
 
@@ -141,7 +142,7 @@ class ProductController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $product = product::find($id);
+        $product = Product::find($id);
         if ($product) {
             $product->delete();
         }

@@ -119,10 +119,7 @@ class SupplierController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $supplier = supplier::find($id);
-        if ($supplier) {
-            $supplier->delete();
-        }
+        Supplier::find($id)->delete();
 
         return to_route('suppliers.index');
     }

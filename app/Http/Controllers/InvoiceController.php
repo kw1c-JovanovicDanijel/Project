@@ -45,7 +45,7 @@ class InvoiceController extends Controller
                 ];
             });
 
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', ['invoices' => $invoices]);
 
     }
 
@@ -74,7 +74,7 @@ class InvoiceController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return view('invoices.show', compact('invoice'));
+        return view('invoices.show', ['invoice' => $invoice, 'order' => $invoice->order]);
     }
 
     /**

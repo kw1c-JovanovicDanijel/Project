@@ -115,10 +115,7 @@ class CustomerController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $customer = Customer::find($id);
-        if ($customer) {
-            $customer->delete();
-        }
+        Customer::find($id)->delete();
 
         return to_route('customers.index');
     }

@@ -19,12 +19,6 @@ class CompanyOrderController extends Controller
         $orders = CompanyOrder::withSum('products as product_count', 'company_order_product.quantity')
             ->paginate(10);
 
-        $orders->getCollection()->transform(function ($order) {
-            // $order->makeHidden('order_date');
-
-            return $order;
-        });
-
         return view('company_orders.index', ['orders' => $orders]);
     }
 

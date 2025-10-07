@@ -27,6 +27,7 @@ class AddressController extends Controller
         if (str_contains($previousUrl, '/customers/')) {
             $addressable_type = Customer::class;
 
+            // string opsplitsen in een array dus voor de slash en na de slash en pakt de laatste element van de array (url)
             $segments = explode('/', parse_url($previousUrl, PHP_URL_PATH));
             $addressable_id = end($segments);
         } elseif (str_contains($previousUrl, '/suppliers/')) {
@@ -121,8 +122,10 @@ class AddressController extends Controller
         }
 
         if ($address->addressable_type == Supplier::class) {
-            return to_route('suppliers.show', $address->addressable_id) ?? to_route('home');
+            return to_route('suppliers.show', $address->addressable_id);
         }
+
+        return to_route('home');
     }
 
     /**

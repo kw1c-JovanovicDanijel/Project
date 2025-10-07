@@ -22,7 +22,10 @@ class DashboardController extends Controller
             ->verzonden()
             ->with('products')
             ->get()
-            ->flatMap->products
+            // orgraniseren in een array FlatMap
+            ->flatMap
+            ->products
+            // voor ieder order de totaal prijs bereken als 1 variable
             ->sum(fn ($product) => $product->pivot->price * $product->pivot->quantity);
 
         // Stel doelen
@@ -31,7 +34,6 @@ class DashboardController extends Controller
         $supplierGoal = 4000;  // totaal doel leveranciers
 
         // Dynamische berekeningen voor de progress bars
-        $newCustomersThisMonth = Customer::whereMonth('created_at', now()->month)->count();
         $customerGrowthPercent = $customerGoal > 0
             ? min(round(($totalCustomers / $customerGoal) * 100), 100) // max 100%
             : 0;

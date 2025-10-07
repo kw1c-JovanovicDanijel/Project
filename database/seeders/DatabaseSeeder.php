@@ -71,6 +71,8 @@ class DatabaseSeeder extends Seeder
         Order::factory(100)->create()->each(function (Order $order) use ($products) {
             $randomProducts = $products->random(rand(1, 5));
 
+            // attach is dat hij de velden toevoegt aan het schakel tabel
+
             $order->products()->attach(
                 $randomProducts->mapWithKeys(fn (Product $product) => [
                     $product->id => [
@@ -82,6 +84,9 @@ class DatabaseSeeder extends Seeder
                 ])->toArray()
             );
         });
+
+        // zet de helft op verzonden zodat er automatisch facturen gemaakt worden
+        // each is for each loop maar je returnt geen value
 
         Order::all()->each(function (Order $order) {
             if (fake()->boolean()) {
