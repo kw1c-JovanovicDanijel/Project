@@ -2,7 +2,7 @@
 
 <div class="flex flex-col w-full space-y-6">
     <!-- Header met Create knop -->
-    <div class="flex justify-between items-center pt-5 px-5">
+    <div class="flex items-center justify-between px-5 pt-5">
         <h3 class="text-xl font-bold text-gray-800">{{ $name }}</h3>
 
         @if (!Route::is('invoices.index'))
@@ -32,12 +32,8 @@
                             @php
                                 $object = collect($object);
                                 $id = $object->get('id');
-                                $object = $object->except('id');
-                                $created_at = \Carbon\Carbon::parse($object->get('created_at'))->format('d-m-Y');
-                                $updated_at = \Carbon\Carbon::parse($object->get('updated_at'))->format('d-m-Y');
+                                $object = $object->except(['id', 'created_at', 'updated_at']);
                                 $object = $object->toArray();
-                                $object['created_at'] = $created_at;
-                                $object['updated_at'] = $updated_at;
                             @endphp
                             @foreach ($object as $thing)
                                 <td class="px-4 py-2 border">{{ $thing }}</td>
