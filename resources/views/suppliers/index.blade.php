@@ -1,6 +1,6 @@
 @php
     $route ='suppliers';
-    $columns = ['Naam' , 'E-Mail' , 'Telefoon nummer' , 'Gemaakt Op' , 'Geupdate Op'];
+    $columns = ['Naam' , 'E-Mail' , 'Telefoon nummer'];
     $name = 'Leveranciers'
 @endphp
 <x-layout>

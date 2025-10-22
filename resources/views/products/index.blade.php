@@ -1,6 +1,6 @@
 @php
     $route = 'products';
-    $columns = ['Naam', 'Beschrijving', 'Inkoop prijs', 'Verkoop prijs' , 'Leverancier' ,'Aangemaakt op' , 'Laatst geupdate'];
+    $columns = ['Naam', 'Beschrijving', 'Inkoop prijs', 'Verkoop prijs' , 'Leverancier'];
     $name = 'Producten';
 
 @endphp

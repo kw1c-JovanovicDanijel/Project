@@ -1,6 +1,6 @@
 @php
     $name = 'Factuur overzicht';
-    $columns = ['Naam' , 'Aantal Producten' , 'Prijs' , 'Betaal Datum' , 'Gemaakt op' , 'Geupdate op'];
+    $columns = ['Naam' , 'Aantal Producten' , 'Prijs' , 'Betaal Datum'];
     $route = 'invoices';
 @endphp
 

@@ -2,7 +2,7 @@
 // Customers krijg je door de controller heen, deze hoef je hier niet neer te zetten maar zodat we dit weten.
 $customers;
 $name = 'Klanten overzicht';
-$columns = ['naam', 'email', 'gemaakt op', 'geupdate op'];
+$columns = ['naam', 'email'];
 $route = 'customers';
 ?>
 <x-layout>
