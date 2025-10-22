@@ -1,16 +1,14 @@
 @use(App\Models\Customer)
 
 @php
-    $customers = Customer::all();
+    $customers = Customer::all()->sortBy(fn($customer) => $customer->name);
 @endphp
 
 <x-layout>
     <div
-        class="fixed inset-0 flex items-center justify-center z-50 
-                bg-gradient-to-br from-black via-gray-900 to-gray-800">
+        class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-gray-800">
         <div
-            class="relative rounded-xl shadow-xl max-w-lg w-full mx-4 
-                    bg-gradient-to-br from-black via-gray-900 to-gray-800 border border-amber-400">
+            class="relative w-full max-w-lg mx-4 border shadow-xl rounded-xl bg-gradient-to-br from-black via-gray-900 to-gray-800 border-amber-400">
 
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6">
@@ -25,7 +23,7 @@
 
                 <div class="px-6 py-6">
                     <div>
-                        <label for="customer_id" class="block text-sm font-medium text-gray-300 mb-2">
+                        <label for="customer_id" class="block mb-2 text-sm font-medium text-gray-300">
                             Klant
                         </label>
                         <select name="customer_id" id="customer_id" required
@@ -50,7 +48,7 @@
                     </button>
 
                     <a href="{{ route('orders.index') }}"
-                        class="hover:cursor-pointer px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-sm flex items-center justify-center">
+                        class="flex items-center justify-center px-3 py-2 font-semibold text-white bg-gray-700 rounded-lg shadow-sm hover:cursor-pointer hover:bg-gray-600">
                         Annuleren
                     </a>
                 </div>
