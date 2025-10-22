@@ -46,7 +46,7 @@ class OrderController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return view('orders.create');
+        return to_route('create-order');
     }
 
     /**
