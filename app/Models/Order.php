@@ -30,6 +30,11 @@ class Order extends Model
         return $this->hasOne(Invoice::class);
     }
 
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
+
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

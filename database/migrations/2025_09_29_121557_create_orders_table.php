@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\OrderStatus;
+use App\Models\Address;
 use App\Models\Customer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique()->nullable();
+            $table->foreignIdFor(Address::class);
             $table->foreignIdFor(Customer::class)->constrained();
             $table->date('order_date')->nullable();
             $table->date('date_completed')->nullable();
