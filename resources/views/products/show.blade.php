@@ -1,27 +1,27 @@
 <x-layout>
-    <div class="h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 flex flex-col font-sans">
-        <div class="flex-1 flex flex-col items-center justify-center text-center px-4">
+    <div class="flex flex-col h-screen font-sans bg-gradient-to-br from-black via-gray-900 to-gray-800">
+        <div class="flex flex-col items-center justify-center flex-1 px-4 text-center">
             <h1 class="text-4xl font-extrabold text-[#ff9900] drop-shadow-lg mb-8">
                 Product Overzicht
             </h1>
 
-            <div class="bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8 max-w-md w-full text-left">
+            <div class="w-full max-w-md p-8 text-left bg-gray-800 border border-gray-700 shadow-xl rounded-2xl">
                 <h2 class="text-2xl font-bold text-[#ff9900] mb-4">
                     {{ $product->name }}
                 </h2>
-                <p class="text-gray-300 mb-2">
+                <p class="mb-2 text-gray-300">
                     <span class="font-semibold text-gray-400">Description</span> {{ $product->description }}
                 </p>
-                <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">Inkoop prijs</span> {{ $product->buy_price }}
+                <p class="mb-2 text-gray-300">
+                    <span class="font-semibold text-gray-400">Inkoop prijs</span> €{{ $product->buy_price }}
                 </p>
-                <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">Verkoop prijs</span> {{ $product->sell_price }}
+                <p class="mb-2 text-gray-300">
+                    <span class="font-semibold text-gray-400">Verkoop prijs</span> €{{ $product->sell_price }}
                 </p>
-                <p class="text-gray-300 mb-2">
+                <p class="mb-2 text-gray-300">
                     <span class="font-semibold text-gray-400">Leverancier</span> {{ $product->supplier->name }}
                 </p>
-                <p class="text-gray-300 mb-2">
+                <p class="mb-2 text-gray-300">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
                     {{ \Carbon\Carbon::parse($product->created_at)->format('d-m-Y') }}
                 </p>
@@ -30,7 +30,7 @@
                     {{ \Carbon\Carbon::parse($product->updated_at)->format('d-m-Y') }}
                 </p>
 
-                <div class="mt-6 flex justify-center gap-3 items-center">
+                <div class="flex items-center justify-center gap-3 mt-6">
                     <a href="{{ route('products.edit', $product) }}"
                         class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
                         Bewerken
@@ -39,13 +39,13 @@
                     <div class="relative flex items-center">
                         <input type="checkbox" id="delete-modal-toggle" class="hidden peer" />
                         <label for="delete-modal-toggle"
-                            class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-lg shadow-sm">
+                            class="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg shadow-sm hover:cursor-pointer hover:bg-red-600">
                             Verwijderen
                         </label>
 
                         <div
-                            class="fixed inset-0 bg-black/50 hidden peer-checked:flex items-center justify-center z-50">
-                            <div class="bg-gray-800 rounded-xl shadow-xl max-w-md w-full p-6 text-center space-y-4">
+                            class="fixed inset-0 z-50 items-center justify-center hidden bg-black/50 peer-checked:flex">
+                            <div class="w-full max-w-md p-6 space-y-4 text-center bg-gray-800 shadow-xl rounded-xl">
                                 <h3 class="text-lg font-bold text-[#ff9900]">Weet je het zeker?</h3>
                                 <p class="text-gray-300">Dit kan niet ongedaan worden gemaakt.</p>
                                 <div class="flex justify-center gap-3 mt-4">
@@ -53,12 +53,12 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white rounded-lg font-semibold">
+                                            class="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg hover:cursor-pointer hover:bg-red-600">
                                             Ja, verwijderen
                                         </button>
                                     </form>
                                     <label for="delete-modal-toggle"
-                                        class="hover:cursor-pointer px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg font-semibold cursor-pointer">
+                                        class="px-4 py-2 font-semibold text-white bg-gray-700 rounded-lg cursor-pointer hover:cursor-pointer hover:bg-gray-600">
                                         Annuleren
                                     </label>
                                 </div>
