@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Enums\OrderStatus;
 use App\Models\Invoice;
 use App\Models\Order;
+use Illuminate\Support\Str;
 
 class OrderObserver
 {
@@ -13,7 +14,13 @@ class OrderObserver
      */
     public function created(Order $order): void
     {
-        //
+        $number = random_int(1, 999999999);
+        $padded = Str::padLeft($number, 9, 0);
+        $reference = 'ORD#'.$padded;
+
+        $order->update([
+            'reference' => $reference,
+        ]);
     }
 
     /**

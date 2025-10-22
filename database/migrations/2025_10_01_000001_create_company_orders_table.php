@@ -11,6 +11,7 @@ return new class extends Migration
     {
         Schema::create('company_orders', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique()->nullable();
             $table->date('order_date')->nullable();
             $table->enum('status', OrderStatus::cases());
             $table->timestamps();

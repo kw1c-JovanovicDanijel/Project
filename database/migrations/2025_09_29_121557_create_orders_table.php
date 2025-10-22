@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('reference')->unique()->nullable();
             $table->foreignIdFor(Customer::class)->constrained();
             $table->date('order_date')->nullable();
             $table->date('date_completed')->nullable();
