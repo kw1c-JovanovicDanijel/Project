@@ -9,8 +9,11 @@
 
             <div class="bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8 max-w-lg w-full text-left">
                 <!-- Status -->
+                <h2 class="text-2xl font-bold mb-4 text-white">
+                    {{ $order->reference}}
+                </h2>
                 <h2
-                    class="text-2xl font-bold mb-4 
+                    class="text-2xl font-bold mb-4
                     {{ $order->status === OrderStatus::BEZIG->name ? 'text-green-400' : 'text-red-500' }}">
                     {{ $order->status }}
                 </h2>
@@ -55,27 +58,40 @@
 
                 @if ($order->products->isNotEmpty())
                     @php $totalPrice = 0; @endphp
-                    <ul class="space-y-2">
-                        @foreach ($order->products as $product)
-                            @php
-                                $linePrice = $product->pivot->price * $product->pivot->quantity;
-                                $totalPrice += $linePrice;
-                            @endphp
-                            <li class="bg-gray-700 rounded-lg px-4 py-2 flex justify-between items-center">
-                                <a href="{{ route('products.show', $product) }}"
-                                    class="text-gray-300 hover:text-[#ff9900] transition">
-                                    {{ $product->name }}
-                                </a>
-                                <div class="text-right text-gray-300 text-sm">
-                                    <span>x{{ $product->pivot->quantity }}</span><br>
-                                    <span>€{{ number_format($product->pivot->price, 2, ',', '.') }} per stuk</span><br>
-                                    <span class="text-amber-400 font-semibold">
-                                        = €{{ number_format($linePrice, 2, ',', '.') }}
-                                    </span>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-gray-300 border border-gray-700 rounded-lg overflow-hidden">
+                            <thead class="bg-gray-700 text-gray-200">
+                            <tr>
+                                <th class="px-4 py-2 text-left">Product</th>
+                                <th class="px-4 py-2 text-center">Aantal</th>
+                                <th class="px-4 py-2 text-right">Prijs per stuk</th>
+                                <th class="px-4 py-2 text-right">Totaal</th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-gray-800">
+                            @foreach ($order->products as $product)
+                                @php
+                                    $linePrice = $product->pivot->price * $product->pivot->quantity;
+                                    $totalPrice += $linePrice;
+                                @endphp
+                                <tr class="border-b border-gray-700 hover:bg-gray-700/50 transition">
+                                    <td class="px-4 py-2">
+                                        <a href="{{ route('products.show', $product) }}"
+                                           class="text-gray-300 hover:text-[#ff9900] transition font-medium">
+                                            {{ $product->name }}
+                                        </a>
+                                    </td>
+                                    <td class="px-4 py-2 text-center">{{ $product->pivot->quantity }}</td>
+                                    <td class="px-4 py-2 text-right">€{{ number_format($product->pivot->price, 2, ',', '.') }}</td>
+                                    <td class="px-4 py-2 text-right text-amber-400 font-semibold">
+                                        €{{ number_format($linePrice, 2, ',', '.') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
 
                     <!-- Totaalprijs -->
                     <div class="mt-6 text-right">
