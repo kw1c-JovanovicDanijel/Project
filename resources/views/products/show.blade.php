@@ -13,10 +13,10 @@
                     <span class="font-semibold text-gray-400">Description</span> {{ $product->description }}
                 </p>
                 <p class="mb-2 text-gray-300">
-                    <span class="font-semibold text-gray-400">Inkoop prijs</span> €{{ $product->buy_price }}
+                    <span class="font-semibold text-gray-400">Inkoop prijs</span> {{ $product->buy_price }}
                 </p>
                 <p class="mb-2 text-gray-300">
-                    <span class="font-semibold text-gray-400">Verkoop prijs</span> €{{ $product->sell_price }}
+                    <span class="font-semibold text-gray-400">Verkoop prijs</span> {{ $product->sell_price }}
                 </p>
                 <p class="mb-2 text-gray-300">
                     <span class="font-semibold text-gray-400">Leverancier</span> {{ $product->supplier->name }}

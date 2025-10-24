@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Enums\UserRoles;
+use App\Helpers\Money;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -37,11 +37,7 @@ class OrderController extends Controller
                 ->map(fn ($product) => $product->pivot)
                 ->sum(fn ($orderLine) => $orderLine->price * $orderLine->quantity);
 
-            $order->totalPrice = Str::of(
-                str($totalPrice)
-                    ->explode('.')
-                    ->last()
-            )->length() == 2 ? '€'.$totalPrice : '€'.$totalPrice.'0';
+            $order->totalPrice = Money::format($totalPrice);
 
             $order->makeHidden(['order_date', 'date_completed', 'address', 'products']);
 
