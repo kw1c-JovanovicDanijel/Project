@@ -1,7 +1,7 @@
 <?php
 $orders;
 $name = 'Order overzicht';
-$columns = ['referentie nummer', 'klantnaam', 'adres', 'status', 'aantal producten', 'totaal'];
+$columns = ['Referentie nummer', 'Klantnaam', 'Adres', 'Status', 'Aantal producten', 'Totaal'];
 $route = 'orders';
 ?>
 <x-layout>

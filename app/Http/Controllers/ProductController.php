@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Enums\UserRoles;
+use App\Helpers\Money;
 use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -30,20 +30,8 @@ class ProductController extends Controller
             // hier zorg je ervoor dat er een euro teken komt voor de getallen bij de inkoop prijs en verkoop prijs
             // . zorgt ervoor dat de getallen worden geforceerd naar string zodat de euro teken erbij kan en dat je strings bij elkaar kan zetten
 
-            $product->buy_price = Str::of(
-                str($product->buy_price)
-                    ->explode('.')
-                    ->last()
-            )->length() == 2 ? $product->buy_price : $product->buy_price.'0';
-
-            $product->sell_price = Str::of(
-                str($product->sell_price)
-                    ->explode('.')
-                    ->last()
-            )->length() == 2 ? $product->sell_price : $product->sell_price.'0';
-
-            $product->buy_price = '€'.$product->buy_price;
-            $product->sell_price = '€'.$product->sell_price;
+            $product->buy_price = Money::format($product->buy_price);
+            $product->sell_price = Money::format($product->sell_price);
 
             return $product;
         });
@@ -102,17 +90,8 @@ class ProductController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $product->buy_price = Str::of(
-            str($product->buy_price)
-                ->explode('.')
-                ->last()
-        )->length() == 2 ? $product->buy_price : $product->buy_price.'0';
-
-        $product->sell_price = Str::of(
-            str($product->sell_price)
-                ->explode('.')
-                ->last()
-        )->length() == 2 ? $product->sell_price : $product->sell_price.'0';
+        $product->buy_price = Money::format($product->buy_price);
+        $product->sell_price = Money::format($product->sell_price);
 
         return view('products.show', ['product' => $product]);
     }
