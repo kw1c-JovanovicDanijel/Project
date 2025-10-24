@@ -70,7 +70,7 @@ class CompanyOrderController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $products = Product::all();
+        $products = Product::where('supplier_id', $companyOrder->supplier_id)->get();
 
         return view('company_orders.edit', [
             'companyOrder' => $companyOrder->load('products'),

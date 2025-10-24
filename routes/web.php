@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\CompanyOrderCompleteController;
 use App\Http\Controllers\CompanyOrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
@@ -34,13 +35,16 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/orders', OrderController::class);
     Route::get('/create-order', CreateOrder::class)->name('create-order');
-    Route::patch('/orders/{order}/complete', OrderCompleteController::class)->name('orders.complete');
-
-    Route::resource('/address', AddressController::class)->except(['index', 'show']);
-    Route::resource('/company-orders', CompanyOrderController::class);
-
+    Route::patch('/orders/{order}/complete', OrderCompleteController::class)
+        ->name('orders.complete');
     Route::patch('/orders/{order}/update-address', UpdateAdressController::class)
         ->name('orders.updateAddress');
+
+    Route::resource('/address', AddressController::class)->except(['index', 'show']);
+
+    Route::resource('/company-orders', CompanyOrderController::class);
+    Route::patch('/company-orders/{companyOrder}/complete', CompanyOrderCompleteController::class)
+        ->name('company-orders.complete');
 });
 
 Route::get('/tinker', function () {

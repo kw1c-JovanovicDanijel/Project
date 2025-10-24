@@ -14,11 +14,11 @@
                 </h2>
 
                 <!-- moved timestamps to top -->
-                <p class="text-gray-500 mb-1 text-sm">
+                <p class="mb-1 text-sm text-gray-500">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
                     {{ \Carbon\Carbon::parse($companyOrder->created_at)->format('d-m-Y') }}
                 </p>
-                <p class="text-gray-500 mb-4 text-sm">
+                <p class="mb-4 text-sm text-gray-500">
                     <span class="font-semibold text-gray-400">Geüpdate op:</span>
                     {{ \Carbon\Carbon::parse($companyOrder->updated_at)->format('d-m-Y') }}
                 </p>
@@ -37,7 +37,7 @@
                     Order datums en tijden
                 </h2>
                 @if ($companyOrder->status == OrderStatus::VERZONDEN->name)
-                    <p class="mb-2 text-gray-400 text-sm">
+                    <p class="mb-2 text-sm text-gray-400">
                         <span class="font-semibold text-gray-400">Verzonden op:</span>
                         {{ \Carbon\Carbon::parse($companyOrder->order_date)->format('d-m-Y') }}
                     </p>
@@ -60,8 +60,8 @@
                     @php $totalPrice = 0; @endphp
 
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-gray-400 border border-gray-700 rounded-lg overflow-hidden">
-                            <thead class="bg-gray-700 text-gray-200">
+                        <table class="w-full overflow-hidden text-sm text-gray-400 border border-gray-700 rounded-lg">
+                            <thead class="text-gray-200 bg-gray-700">
                                 <tr>
                                     <th class="px-4 py-2 text-left">Product</th>
                                     <th class="px-4 py-2 text-center">Aantal</th>
@@ -75,8 +75,8 @@
                                         $linePrice = $product->pivot->price * $product->pivot->quantity;
                                         $totalPrice += $linePrice;
                                     @endphp
-                                    <tr class="border-b border-gray-700 hover:bg-gray-700/50 transition">
-                                        <td class="px-4 py-2 font-medium text-gray-200 text-sm">
+                                    <tr class="transition border-b border-gray-700 hover:bg-gray-700/50">
+                                        <td class="px-4 py-2 text-sm font-medium text-gray-200">
                                             {{ $product->name }}
                                         </td>
                                         <td class="px-4 py-2 text-center">
@@ -85,7 +85,7 @@
                                         <td class="px-4 py-2 text-right">
                                             €{{ number_format($product->pivot->price, 2, ',', '.') }}
                                         </td>
-                                        <td class="px-4 py-2 text-right text-amber-400 font-semibold">
+                                        <td class="px-4 py-2 font-semibold text-right text-amber-400">
                                             €{{ number_format($linePrice, 2, ',', '.') }}
                                         </td>
                                     </tr>
@@ -104,8 +104,44 @@
                     <p class="italic text-gray-400">Geen producten</p>
                 @endif
 
+                @if ($companyOrder->status !== OrderStatus::VERZONDEN->name)
+                    <!-- Modal toggle using checkbox -->
+                    <div class="relative flex justify-center mt-6">
+                        <input type="checkbox" id="complete-modal-toggle" class="hidden peer" />
+                        <label for="complete-modal-toggle"
+                            class="px-4 py-2 font-semibold text-white bg-green-600 rounded-lg shadow-sm hover:cursor-pointer hover:bg-green-500">
+                            Afronden
+                        </label>
+
+                        <!-- Modal -->
+                        <div
+                            class="fixed inset-0 z-50 items-center justify-center hidden bg-black/50 peer-checked:flex">
+                            <div class="w-full max-w-md p-6 space-y-4 text-center bg-gray-800 shadow-xl rounded-xl">
+                                <h3 class="text-lg font-bold text-[#ff9900]">Order afronden?</h3>
+                                <p class="text-gray-300">Weet je zeker dat je deze order wilt afronden? Dit kan niet
+                                    ongedaan worden gemaakt.</p>
+                                <div class="flex justify-center gap-3 mt-4">
+                                    <form method="POST"
+                                        action="{{ route('company-orders.complete', ['companyOrder' => $companyOrder]) }}">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit"
+                                            class="px-4 py-2 font-semibold text-white bg-green-600 rounded-lg hover:cursor-pointer hover:bg-green-500">
+                                            Ja, afronden
+                                        </button>
+                                    </form>
+                                    <label for="complete-modal-toggle"
+                                        class="px-4 py-2 font-semibold text-white bg-gray-700 rounded-lg cursor-pointer hover:cursor-pointer hover:bg-gray-600">
+                                        Annuleren
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
                 <!-- Acties -->
-                <div class="mt-6 flex justify-center gap-3 items-center">
+                <div class="flex items-center justify-center gap-3 mt-6">
+
                     @if ($companyOrder->status !== OrderStatus::VERZONDEN->name)
                         <a href="{{ route('company-orders.edit', $companyOrder) }}"
                             class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">

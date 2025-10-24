@@ -24,6 +24,5 @@ class OrderCompleteController extends Controller
         ]);
 
         return redirect()->route('orders.show', $order);
-
     }
 }
