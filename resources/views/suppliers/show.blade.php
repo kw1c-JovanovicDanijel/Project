@@ -6,22 +6,24 @@
             </h1>
 
             <div class="bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8 max-w-md w-full text-left">
-                <h2 class="text-2xl font-bold text-[#ff9900] mb-4">
-                    {{ $supplier->name }}
-                </h2>
-                <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">Email</span> {{ $supplier->email }}
-                </p>
-                <p class="text-gray-300 mb-2">
-                    <span class="font-semibold text-gray-400">Telefoonnummer</span> {{ $supplier->phone_number }}
-                </p>
-                <p class="text-gray-300 mb-2">
+                <!-- moved timestamps to top -->
+                <p class="text-gray-500 mb-1 text-sm">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
                     {{ \Carbon\Carbon::parse($supplier->created_at)->format('d-m-Y') }}
                 </p>
-                <p class="text-gray-300">
+                <p class="text-gray-500 mb-4 text-sm">
                     <span class="font-semibold text-gray-400">Geüpdatet op:</span>
                     {{ \Carbon\Carbon::parse($supplier->updated_at)->format('d-m-Y') }}
+                </p>
+
+                <h2 class="text-2xl font-bold text-[#ff9900] mb-4">
+                    {{ $supplier->name }}
+                </h2>
+                <p class="text-gray-400 mb-2 text-sm">
+                    <span class="font-semibold text-gray-400">Email</span> {{ $supplier->email }}
+                </p>
+                <p class="text-gray-400 mb-2 text-sm">
+                    <span class="font-semibold text-gray-400">Telefoonnummer</span> {{ $supplier->phone_number }}
                 </p>
 
                 <h2 class="text-2xl font-bold text-[#ff9900] mt-10 mb-4">
@@ -31,13 +33,13 @@
                 @if ($supplier->addresses->isNotEmpty())
                     @foreach ($supplier->addresses as $i => $address)
                         <a href="{{ route('address.edit', $address) }}"
-                            class="block text-gray-300 mb-2 hover:text-[#ff9900] transition">
+                            class="block text-gray-400 mb-2 hover:text-[#ff9900] transition text-sm">
                             <span class="font-semibold text-gray-400">Adres {{ $i + 1 }}:</span>
                             {{ $address->street_name . ' ' . $address->house_number . ', ' . $address->city . ', ' . $address->zip_code }}
                         </a>
                     @endforeach
                 @else
-                    <p class="text-gray-400 italic">Geen adres beschikbaar</p>
+                    <p class="text-gray-500 italic text-sm">Geen adres beschikbaar</p>
                 @endif
 
                 <!-- Knop nieuw adres toevoegen -->
