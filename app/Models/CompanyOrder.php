@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[ObservedBy(CompanyOrderObserver::class)]
@@ -20,6 +21,11 @@ class CompanyOrder extends Model
     {
         return $this->belongsToMany(Product::class, 'company_order_product')
             ->withPivot('quantity', 'price', 'created_at', 'updated_at');
+    }
+
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
     }
 
     // als je $order->bezig() aanroept terwijl het nog sql is,

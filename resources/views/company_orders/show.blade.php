@@ -1,18 +1,16 @@
 @use(\App\Enums\OrderStatus)
 
 <x-layout>
-    <div class="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 flex flex-col font-sans">
-        <div class="flex-1 flex flex-col items-center justify-center text-center px-4">
+    <div class="flex flex-col min-h-screen font-sans bg-gradient-to-br from-black via-gray-900 to-gray-800">
+        <div class="flex flex-col items-center justify-center flex-1 px-4 text-center">
             <h1 class="text-4xl font-extrabold text-[#ff9900] drop-shadow-lg mb-8">
                 Bestelling Overzicht
             </h1>
 
-            <div class="bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8 max-w-lg w-full text-left">
+            <div class="w-full max-w-lg p-8 text-left bg-gray-800 border border-gray-700 shadow-xl rounded-2xl">
                 <!-- Status -->
-                <h2
-                    class="text-2xl font-bold mb-4 text-white">
-
-                {{ $companyOrder->reference}}
+                <h2 class="mb-4 text-2xl font-bold text-white">
+                    {{ $companyOrder->reference }}
                 </h2>
                 <h2
                     class="text-2xl font-bold mb-4
@@ -20,17 +18,20 @@
                     {{ $companyOrder->status }}
                 </h2>
 
+                <p class="text-gray-300">
+                    Leverancier: {{ $companyOrder->supplier->name }}
+                </p>
                 <!-- Datums -->
                 <h2 class="text-2xl font-bold text-[#ff9900] mb-4 mt-6">
                     Order datums en tijden
                 </h2>
                 @if ($companyOrder->status == OrderStatus::VERZONDEN->name)
-                    <p class="text-gray-300 mb-2">
+                    <p class="mb-2 text-gray-300">
                         <span class="font-semibold text-gray-400">Verzonden op:</span>
                         {{ \Carbon\Carbon::parse($companyOrder->order_date)->format('d-m-Y') }}
                     </p>
                 @endif
-                <p class="text-gray-300 mb-2">
+                <p class="mb-2 text-gray-300">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
                     {{ \Carbon\Carbon::parse($companyOrder->created_at)->format('d-m-Y') }}
                 </p>
@@ -48,36 +49,36 @@
                     @php $totalPrice = 0; @endphp
 
                     <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-gray-300 border border-gray-700 rounded-lg overflow-hidden">
-                            <thead class="bg-gray-700 text-gray-200">
-                            <tr>
-                                <th class="px-4 py-2 text-left">Product</th>
-                                <th class="px-4 py-2 text-center">Aantal</th>
-                                <th class="px-4 py-2 text-right">Prijs per stuk</th>
-                                <th class="px-4 py-2 text-right">Totaal</th>
-                            </tr>
+                        <table class="w-full overflow-hidden text-sm text-gray-300 border border-gray-700 rounded-lg">
+                            <thead class="text-gray-200 bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Product</th>
+                                    <th class="px-4 py-2 text-center">Aantal</th>
+                                    <th class="px-4 py-2 text-right">Prijs per stuk</th>
+                                    <th class="px-4 py-2 text-right">Totaal</th>
+                                </tr>
                             </thead>
                             <tbody class="bg-gray-800">
-                            @foreach ($companyOrder->products as $product)
-                                @php
-                                    $linePrice = $product->pivot->price * $product->pivot->quantity;
-                                    $totalPrice += $linePrice;
-                                @endphp
-                                <tr class="border-b border-gray-700 hover:bg-gray-700/50 transition">
-                                    <td class="px-4 py-2 font-medium text-gray-200">
-                                        {{ $product->name }}
-                                    </td>
-                                    <td class="px-4 py-2 text-center">
-                                        {{ $product->pivot->quantity }}
-                                    </td>
-                                    <td class="px-4 py-2 text-right">
-                                        €{{ number_format($product->pivot->price, 2, ',', '.') }}
-                                    </td>
-                                    <td class="px-4 py-2 text-right text-amber-400 font-semibold">
-                                        €{{ number_format($linePrice, 2, ',', '.') }}
-                                    </td>
-                                </tr>
-                            @endforeach
+                                @foreach ($companyOrder->products as $product)
+                                    @php
+                                        $linePrice = $product->pivot->price * $product->pivot->quantity;
+                                        $totalPrice += $linePrice;
+                                    @endphp
+                                    <tr class="transition border-b border-gray-700 hover:bg-gray-700/50">
+                                        <td class="px-4 py-2 font-medium text-gray-200">
+                                            {{ $product->name }}
+                                        </td>
+                                        <td class="px-4 py-2 text-center">
+                                            {{ $product->pivot->quantity }}
+                                        </td>
+                                        <td class="px-4 py-2 text-right">
+                                            €{{ number_format($product->pivot->price, 2, ',', '.') }}
+                                        </td>
+                                        <td class="px-4 py-2 font-semibold text-right text-amber-400">
+                                            €{{ number_format($linePrice, 2, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -89,13 +90,13 @@
                         </span>
                     </div>
                 @else
-                    <p class="text-gray-400 italic">Geen producten</p>
+                    <p class="italic text-gray-400">Geen producten</p>
                 @endif
 
                 <!-- Acties -->
-                <div class="mt-6 flex justify-center gap-3 items-center">
+                <div class="flex items-center justify-center gap-3 mt-6">
                     <a href="{{ route('company-orders.edit', $companyOrder) }}"
-                       class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
+                        class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
                         Bewerk producten
                     </a>
 
@@ -103,8 +104,8 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                                class="hover:cursor-pointer px-4 py-2 bg-red-700 hover:bg-red-600 text-white font-semibold rounded-lg shadow-sm"
-                                onclick="return confirm('Weet je het zeker? Dit kan niet ongedaan worden gemaakt.')">
+                            class="px-4 py-2 font-semibold text-white bg-red-700 rounded-lg shadow-sm hover:cursor-pointer hover:bg-red-600"
+                            onclick="return confirm('Weet je het zeker? Dit kan niet ongedaan worden gemaakt.')">
                             Verwijderen
                         </button>
                     </form>
@@ -113,7 +114,7 @@
 
             <!-- Terug knop -->
             <a href="{{ route('company-orders.index') }}"
-               class="mt-8 inline-block px-6 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
+                class="mt-8 inline-block px-6 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
                 Terug naar overzicht
             </a>
         </div>

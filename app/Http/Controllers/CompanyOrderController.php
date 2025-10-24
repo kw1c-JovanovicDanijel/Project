@@ -19,6 +19,15 @@ class CompanyOrderController extends Controller
         $orders = CompanyOrder::withSum('products as product_count', 'company_order_product.quantity')
             ->paginate(10);
 
+        $orders->getCollection()->map(function ($order) {
+            $order->supplier_id = $order->supplier->name;
+
+            return $order;
+        });
+
+        $orders->makeHidden('supplier');
+        // dd($orders);
+
         return view('company_orders.index', ['orders' => $orders]);
     }
 
@@ -28,7 +37,7 @@ class CompanyOrderController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return $this->store();
+        return view('company_orders.create');
     }
 
     public function store()
@@ -40,6 +49,7 @@ class CompanyOrderController extends Controller
         $order = CompanyOrder::create([
             'order_date' => null,
             'status' => OrderStatus::BEZIG,
+            'supplier_id' => request()->input('supplier_id'),
         ]);
 
         return to_route('company-orders.show', $order);
