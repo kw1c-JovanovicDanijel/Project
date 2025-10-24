@@ -1,10 +1,8 @@
 <x-layout>
     <div
-        class="fixed inset-0 flex items-center justify-center z-50
-                bg-gradient-to-br from-black via-gray-900 to-gray-800">
+        class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-gray-800">
         <div
-            class="relative rounded-xl shadow-xl max-w-4xl w-full mx-4
-                    bg-gradient-to-br from-black via-gray-900 to-gray-800 border border-amber-400">
+            class="relative w-full max-w-4xl mx-4 border shadow-xl rounded-xl bg-gradient-to-br from-black via-gray-900 to-gray-800 border-amber-400">
 
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6">
@@ -14,12 +12,12 @@
             </div>
 
             <!-- Producten toevoegen -->
-            <form method="POST" action="{{ route('orders.update', $companyOrder) }}" class="px-6 py-6">
+            <form method="POST" action="{{ route('company-orders.update', $companyOrder) }}" class="px-6 py-6">
                 @csrf
                 @method('PATCH')
 
                 <div>
-                    <label for="product_id" class="block text-sm font-medium text-gray-300 mb-2">
+                    <label for="product_id" class="block mb-2 text-sm font-medium text-gray-300">
                         Nieuw product toevoegen
                     </label>
                     <select name="product_id" id="product_id" required
@@ -28,14 +26,14 @@
                         <option value="">-- Kies een product --</option>
                         @foreach ($products as $product)
                             <option value="{{ $product->id }}">
-                                {{ $product->name }} (€{{ number_format($product->sell_price, 2, ',', '.') }})
+                                {{ $product->name }} (€{{ number_format($product->buy_price, 2, ',', '.') }})
                             </option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="mt-4">
-                    <label for="quantity" class="block text-sm font-medium text-gray-300 mb-2">
+                    <label for="quantity" class="block mb-2 text-sm font-medium text-gray-300">
                         Aantal
                     </label>
                     <input type="number" name="quantity" id="quantity" min="1" value="1" required
@@ -65,13 +63,13 @@
                                 $linePrice = $product->pivot->price * $product->pivot->quantity;
                                 $totalPrice += $linePrice;
                             @endphp
-                            <li class="flex justify-between items-center bg-gray-800 px-4 py-2 rounded-lg">
+                            <li class="flex items-center justify-between px-4 py-2 bg-gray-800 rounded-lg">
                                 <span class="text-gray-300">
                                     {{ $product->name }}
                                     (x{{ $product->pivot->quantity }})
                                     -
                                     €{{ number_format($product->pivot->price, 2, ',', '.') }} per stuk
-                                    <span class="text-amber-400 font-semibold">
+                                    <span class="font-semibold text-amber-400">
                                         = €{{ number_format($linePrice, 2, ',', '.') }}
                                     </span>
                                 </span>
@@ -81,7 +79,7 @@
                                     @method('PATCH')
                                     <input type="hidden" name="remove_product_id" value="{{ $product->id }}">
                                     <button type="submit"
-                                        class="hover:cursor-pointer px-3 py-1 bg-red-700 hover:bg-red-600 text-white rounded-lg text-sm">
+                                        class="px-3 py-1 text-sm text-white bg-red-700 rounded-lg hover:cursor-pointer hover:bg-red-600">
                                         Verwijderen
                                     </button>
                                 </form>
@@ -96,14 +94,14 @@
                         </span>
                     </div>
                 @else
-                    <p class="text-gray-400 italic">Geen producten toegevoegd</p>
+                    <p class="italic text-gray-400">Geen producten toegevoegd</p>
                 @endif
             </div>
 
             <!-- Footer -->
             <div class="flex justify-end gap-3 px-6 pb-6">
                 <a href="{{ route('company-orders.show', ['company_order' => $companyOrder]) }}"
-                    class="hover:cursor-pointer px-3 py-2 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg shadow-sm flex items-center justify-center">
+                    class="flex items-center justify-center px-3 py-2 font-semibold text-white bg-gray-700 rounded-lg shadow-sm hover:cursor-pointer hover:bg-gray-600">
                     Terug
                 </a>
             </div>

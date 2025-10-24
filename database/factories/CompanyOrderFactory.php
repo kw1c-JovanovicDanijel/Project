@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\OrderStatus;
+use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +18,7 @@ class CompanyOrderFactory extends Factory
         return [
             'order_date' => $is_completed ? fake()->dateTimeThisCentury() : null,
             'status' => $is_completed ? OrderStatus::VERZONDEN : OrderStatus::BEZIG,
+            'supplier_id' => Supplier::inRandomOrder()->first()->id,
         ];
     }
 }
