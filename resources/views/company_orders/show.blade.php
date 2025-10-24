@@ -12,6 +12,17 @@
                 <h2 class="mb-4 text-2xl font-bold text-white">
                     {{ $companyOrder->reference }}
                 </h2>
+
+                <!-- moved timestamps to top -->
+                <p class="text-gray-500 mb-1 text-sm">
+                    <span class="font-semibold text-gray-400">Aangemaakt op:</span>
+                    {{ \Carbon\Carbon::parse($companyOrder->created_at)->format('d-m-Y') }}
+                </p>
+                <p class="text-gray-500 mb-4 text-sm">
+                    <span class="font-semibold text-gray-400">Geüpdate op:</span>
+                    {{ \Carbon\Carbon::parse($companyOrder->updated_at)->format('d-m-Y') }}
+                </p>
+
                 <h2
                     class="text-2xl font-bold mb-4
                     {{ $companyOrder->status === OrderStatus::BEZIG->name ? 'text-green-400' : 'text-red-500' }}">
@@ -26,7 +37,7 @@
                     Order datums en tijden
                 </h2>
                 @if ($companyOrder->status == OrderStatus::VERZONDEN->name)
-                    <p class="mb-2 text-gray-300">
+                    <p class="mb-2 text-gray-400 text-sm">
                         <span class="font-semibold text-gray-400">Verzonden op:</span>
                         {{ \Carbon\Carbon::parse($companyOrder->order_date)->format('d-m-Y') }}
                     </p>
@@ -49,8 +60,8 @@
                     @php $totalPrice = 0; @endphp
 
                     <div class="overflow-x-auto">
-                        <table class="w-full overflow-hidden text-sm text-gray-300 border border-gray-700 rounded-lg">
-                            <thead class="text-gray-200 bg-gray-700">
+                        <table class="w-full text-sm text-gray-400 border border-gray-700 rounded-lg overflow-hidden">
+                            <thead class="bg-gray-700 text-gray-200">
                                 <tr>
                                     <th class="px-4 py-2 text-left">Product</th>
                                     <th class="px-4 py-2 text-center">Aantal</th>
@@ -64,8 +75,8 @@
                                         $linePrice = $product->pivot->price * $product->pivot->quantity;
                                         $totalPrice += $linePrice;
                                     @endphp
-                                    <tr class="transition border-b border-gray-700 hover:bg-gray-700/50">
-                                        <td class="px-4 py-2 font-medium text-gray-200">
+                                    <tr class="border-b border-gray-700 hover:bg-gray-700/50 transition">
+                                        <td class="px-4 py-2 font-medium text-gray-200 text-sm">
                                             {{ $product->name }}
                                         </td>
                                         <td class="px-4 py-2 text-center">
@@ -74,7 +85,7 @@
                                         <td class="px-4 py-2 text-right">
                                             €{{ number_format($product->pivot->price, 2, ',', '.') }}
                                         </td>
-                                        <td class="px-4 py-2 font-semibold text-right text-amber-400">
+                                        <td class="px-4 py-2 text-right text-amber-400 font-semibold">
                                             €{{ number_format($linePrice, 2, ',', '.') }}
                                         </td>
                                     </tr>
@@ -94,11 +105,13 @@
                 @endif
 
                 <!-- Acties -->
-                <div class="flex items-center justify-center gap-3 mt-6">
-                    <a href="{{ route('company-orders.edit', $companyOrder) }}"
-                        class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
-                        Bewerk producten
-                    </a>
+                <div class="mt-6 flex justify-center gap-3 items-center">
+                    @if ($companyOrder->status !== OrderStatus::VERZONDEN->name)
+                        <a href="{{ route('company-orders.edit', $companyOrder) }}"
+                            class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
+                            Bewerk producten
+                        </a>
+                    @endif
 
                     <form method="POST" action="{{ route('company-orders.destroy', $companyOrder) }}">
                         @csrf

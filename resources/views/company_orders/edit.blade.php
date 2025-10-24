@@ -1,15 +1,15 @@
 <x-layout>
     <div
-        class="fixed inset-0 flex items-center justify-center z-50 
+        class="fixed inset-0 flex items-center justify-center z-50
                 bg-gradient-to-br from-black via-gray-900 to-gray-800">
         <div
-            class="relative rounded-xl shadow-xl max-w-4xl w-full mx-4 
+            class="relative rounded-xl shadow-xl max-w-4xl w-full mx-4
                     bg-gradient-to-br from-black via-gray-900 to-gray-800 border border-amber-400">
 
             <!-- Header -->
             <div class="flex items-center justify-between px-6 pt-6">
                 <h2 class="text-base font-semibold text-[#ff9900]">
-                    Order #{{ $companyOrder->id }} bewerken
+                    {{ $companyOrder->reference }} bewerken
                 </h2>
             </div>
 

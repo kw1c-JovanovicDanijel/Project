@@ -6,28 +6,30 @@
             </h1>
 
             <div class="w-full max-w-md p-8 text-left bg-gray-800 border border-gray-700 shadow-xl rounded-2xl">
-                <h2 class="text-2xl font-bold text-[#ff9900] mb-4">
-                    {{ $product->name }}
-                </h2>
-                <p class="mb-2 text-gray-300">
-                    <span class="font-semibold text-gray-400">Description</span> {{ $product->description }}
-                </p>
-                <p class="mb-2 text-gray-300">
-                    <span class="font-semibold text-gray-400">Inkoop prijs</span> {{ $product->buy_price }}
-                </p>
-                <p class="mb-2 text-gray-300">
-                    <span class="font-semibold text-gray-400">Verkoop prijs</span> {{ $product->sell_price }}
-                </p>
-                <p class="mb-2 text-gray-300">
-                    <span class="font-semibold text-gray-400">Leverancier</span> {{ $product->supplier->name }}
-                </p>
-                <p class="mb-2 text-gray-300">
+                <!-- moved timestamps to top -->
+                <p class="text-gray-500 mb-1 text-sm">
                     <span class="font-semibold text-gray-400">Aangemaakt op:</span>
                     {{ \Carbon\Carbon::parse($product->created_at)->format('d-m-Y') }}
                 </p>
-                <p class="text-gray-300">
+                <p class="text-gray-500 mb-4 text-sm">
                     <span class="font-semibold text-gray-400">Geüpdatet op:</span>
                     {{ \Carbon\Carbon::parse($product->updated_at)->format('d-m-Y') }}
+                </p>
+
+                <h2 class="text-2xl font-bold text-[#ff9900] mb-4">
+                    {{ $product->name }}
+                </h2>
+                <p class="mb-2 text-gray-400 text-sm">
+                    <span class="font-semibold text-gray-400">Description</span> {{ $product->description }}
+                </p>
+                <p class="mb-2 text-gray-400 text-sm">
+                    <span class="font-semibold text-gray-400">Inkoop prijs</span> €{{ $product->buy_price }}
+                </p>
+                <p class="mb-2 text-gray-400 text-sm">
+                    <span class="font-semibold text-gray-400">Verkoop prijs</span> €{{ $product->sell_price }}
+                </p>
+                <p class="mb-2 text-gray-400 text-sm">
+                    <span class="font-semibold text-gray-400">Leverancier</span> {{ $product->supplier->name }}
                 </p>
 
                 <div class="flex items-center justify-center gap-3 mt-6">

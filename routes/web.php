@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderCompleteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UpdateAdressController;
 use App\Livewire\CreateOrder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/address', AddressController::class)->except(['index', 'show']);
     Route::resource('/company-orders', CompanyOrderController::class);
+
+    Route::patch('/orders/{order}/update-address', UpdateAdressController::class)
+        ->name('orders.updateAddress');
 });
 
 Route::get('/tinker', function () {
