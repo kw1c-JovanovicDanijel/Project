@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
@@ -26,10 +27,23 @@ class OrderController extends Controller
             // ->whereStatus(\App\Enums\OrderStatus::BEZIG)
             ->paginate(10);
 
-        $orders->getCollection()->transform(function ($order) {
+        $orders->getCollection()->map(function ($order) {
+            $address = $order->address;
+            $order->address_id = $address->street_name.' '.$address->house_number.', '.$address->city.', '.$address->zip_code;
+
             $order->customer_id = Customer::find($order->customer_id)->name;
-            $order->makeHidden('order_date');
-            $order->makeHidden('date_completed');
+
+            $totalPrice = $order->products
+                ->map(fn ($product) => $product->pivot)
+                ->sum(fn ($orderLine) => $orderLine->price * $orderLine->quantity);
+
+            $order->totalPrice = Str::of(
+                str($totalPrice)
+                    ->explode('.')
+                    ->last()
+            )->length() == 2 ? '€'.$totalPrice : '€'.$totalPrice.'0';
+
+            $order->makeHidden(['order_date', 'date_completed', 'address', 'products']);
 
             return $order;
         });
@@ -46,7 +60,7 @@ class OrderController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return view('orders.create');
+        return to_route('create-order');
     }
 
     /**

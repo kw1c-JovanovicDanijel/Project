@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderCompleteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
+use App\Livewire\CreateOrder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/suppliers', SupplierController::class);
 
     Route::resource('/orders', OrderController::class);
+    Route::get('/create-order', CreateOrder::class)->name('create-order');
     Route::patch('/orders/{order}/complete', OrderCompleteController::class)->name('orders.complete');
 
     Route::resource('/address', AddressController::class)->except(['index', 'show']);

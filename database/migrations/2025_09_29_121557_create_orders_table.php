@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\OrderStatus;
+use App\Models\Address;
 use App\Models\Customer;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference')->unique()->nullable();
             $table->foreignIdFor(Customer::class)->constrained();
+            $table->foreignIdFor(Address::class);
             $table->date('order_date')->nullable();
             $table->date('date_completed')->nullable();
             $table->enum('status', OrderStatus::cases());
