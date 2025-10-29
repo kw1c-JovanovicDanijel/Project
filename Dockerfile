@@ -3,16 +3,14 @@ FROM node:20 AS node-builder
 
 WORKDIR /var/www/html
 
-# Kopieer package.json en package-lock.json
+# Kopieer enkel package files voor snelle layer-caching
 COPY package*.json ./
 
-# Installeer Node dependencies
-RUN npm install
+ENV NODE_ENV=production
+RUN npm ci --silent --no-audit --progress=false
 
 # Kopieer de rest van de frontend
 COPY . .
-
-# Bouw de productie assets (optioneel: voor dev kun je 'npm run dev')
 RUN npm run build
 
 # ---- Stage 2: PHP/Laravel ----
@@ -20,30 +18,39 @@ FROM php:8.3-fpm
 
 WORKDIR /var/www/html
 
-# Install system dependencies
+# Install system dependencies en PHP-extensies (voeg gd toe als je afbeeldingen verwerkt)
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     libzip-dev \
     libonig-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
     curl \
     zip \
-    && docker-php-ext-install pdo_mysql mbstring zip bcmath
+    && docker-php-ext-configure gd --with-jpeg --with-freetype \
+    && docker-php-ext-install pdo_mysql mbstring zip bcmath gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
+# Composer vanaf officiele image
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Kopieer Laravel project
+# Kopieer de applicatie
 COPY . .
 
-# Installeer PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+# Composer install (productie)
+RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction \
+    && composer clear-cache
 
 # Kopieer Vite build assets van Node stage
 COPY --from=node-builder /var/www/html/public/build /var/www/html/public/build
 
-# Expose PHP-FPM port
+# Zorg voor juiste permissies voor storage en cache
+RUN mkdir -p storage bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 775 storage bootstrap/cache
+
 EXPOSE 9000
 
-# Start PHP-FPM
 CMD ["php-fpm"]
