@@ -22,9 +22,10 @@ WORKDIR /var/www/html
 
 # Installeer systeem dependencies, PHP-extensies en Nginx
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libonig-dev libpng-dev libjpeg-dev libfreetype6-dev curl zip nginx gettext-base \
+    git unzip libzip-dev libonig-dev libpng-dev libjpeg-dev libfreetype6-dev libpq-dev curl zip nginx gettext-base \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
-    && docker-php-ext-install pdo_mysql mbstring zip bcmath gd \
+    && docker-php-ext-install pdo_mysql pdo_pgsql mbstring zip bcmath gd \
+    && docker-php-ext-enable pdo_pgsql \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Composer
@@ -54,7 +55,6 @@ RUN echo "server { \
     location / { try_files \$uri \$uri/ /index.php?\$query_string; } \
     location ~ \\\.php\$ { include fastcgi_params; fastcgi_pass 127.0.0.1:9000; fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name; } \
 }" > /etc/nginx/conf.d/default.conf.template
-
 
 # Expose HTTP (Render gebruikt $PORT env var automatisch)
 EXPOSE 80
