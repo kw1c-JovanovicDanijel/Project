@@ -5,7 +5,7 @@
             <p class="mt-4 text-lg text-gray-300 max-w-xl">
                 Beheer al je orders eenvoudig en efficiënt in ons Order Management System.
             </p>
-            <a href="{{ route('login') }}"
+            <a href="{{ route('login.show') }}"
                 class="mt-8 px-8 py-3 bg-[#ff9900] text-black text-lg font-bold rounded-md shadow-lg hover:bg-yellow-500 transition">
                 Log in
             </a>

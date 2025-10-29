@@ -5,7 +5,7 @@
                 <h2 class="mb-6 text-3xl font-bold text-center text-[#ff9900]">Inloggen</h2>
 
                 <!-- Formulier -->
-                <form method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('login.show')}}">
                     @csrf
 
                     <!-- Email -->
