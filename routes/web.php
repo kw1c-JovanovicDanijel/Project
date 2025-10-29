@@ -21,8 +21,8 @@ Route::get('/', function () {
     return Auth::check() ? to_route('dashboard') : view('home');
 })->name('home');
 
-Route::get('/login', [LoginController::class, 'create'])->middleware(['guest'])->name('login');
-Route::post('/login', [LoginController::class, 'store'])->middleware(['guest'])->name('login');
+Route::get('/login', [LoginController::class, 'create'])->middleware(['guest'])->name('login.show');
+Route::post('/login', [LoginController::class, 'store'])->middleware(['guest'])->name('login.perform');
 Route::post('/logout', LogoutController::class)->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
