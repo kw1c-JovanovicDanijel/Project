@@ -6,10 +6,10 @@ WORKDIR /var/www/html
 # Alleen package files kopiëren voor caching
 COPY package*.json ./
 
-# Installeer alle dependencies (incl. devDependencies voor build)
+# Installeer dependencies (incl. devDependencies voor Vite build)
 RUN npm ci --silent
 
-# Kopieer frontend / Laravel project
+# Kopieer de rest van de frontend / Laravel project
 COPY . .
 
 # Bouw Vite assets voor productie
@@ -20,9 +20,9 @@ FROM php:8.3-fpm
 
 WORKDIR /var/www/html
 
-# Systeem dependencies + PHP extensies + Nginx
+# Installeer systeem dependencies, PHP-extensies en Nginx
 RUN apt-get update && apt-get install -y \
-    git unzip libzip-dev libonig-dev libpng-dev libjpeg-dev libfreetype6-dev curl zip nginx \
+    git unzip libzip-dev libonig-dev libpng-dev libjpeg-dev libfreetype6-dev curl zip nginx gettext-base \
     && docker-php-ext-configure gd --with-jpeg --with-freetype \
     && docker-php-ext-install pdo_mysql mbstring zip bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -30,10 +30,10 @@ RUN apt-get update && apt-get install -y \
 # Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Laravel project kopiëren
+# Kopieer Laravel project
 COPY . .
 
-# Composer install voor productie
+# Composer install productie
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction \
     && composer clear-cache
 
@@ -45,7 +45,7 @@ RUN mkdir -p storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Configureer Nginx direct in Dockerfile
+# Maak Nginx config template met placeholder voor $PORT
 RUN echo "server { \
     listen \$PORT; \
     server_name _; \
@@ -53,10 +53,10 @@ RUN echo "server { \
     index index.php index.html; \
     location / { try_files \$uri \$uri/ /index.php?\$query_string; } \
     location ~ \\\.php\$ { include fastcgi_params; fastcgi_pass 127.0.0.1:9000; fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name; } \
-}" > /etc/nginx/conf.d/default.conf
+}" > /etc/nginx/conf.d/default.conf.template
 
-# Expose poort (Render detecteert automatisch via $PORT)
+# Expose HTTP (Render gebruikt $PORT env var automatisch)
 EXPOSE 80
 
-# Start zowel PHP-FPM als Nginx
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Start PHP-FPM + Nginx via envsubst zodat $PORT wordt vervangen
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && php-fpm -D && nginx -g 'daemon off;'"
