@@ -38,7 +38,8 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --prefer-dist --no-interaction \
     && composer clear-cache
 
-# Kopieer Vite build assets van node-builder
+# Kopieer Vite build assets van node-builder naar public/build
+RUN mkdir -p public/build
 COPY --from=node-builder /var/www/html/public/build /var/www/html/public/build
 
 # Storage / cache permissies
@@ -61,9 +62,13 @@ EXPOSE 80
 
 # Start PHP-FPM, Nginx en run artisan commands zodat database correct is gemigreerd
 CMD sh -c "\
+    echo 'Starting Laravel Production Setup...' && \
     php artisan migrate --force && \
+    php artisan config:clear && \
     php artisan config:cache && \
+    php artisan route:clear && \
     php artisan route:cache && \
+    php artisan view:clear && \
     php artisan view:cache && \
     envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && \
     php-fpm -D && nginx -g 'daemon off;' \
