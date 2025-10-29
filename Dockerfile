@@ -46,7 +46,7 @@ RUN mkdir -p storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Maak Nginx config template met placeholder voor $PORT
+# Nginx config template met placeholder voor $PORT
 RUN echo "server { \
     listen 0.0.0.0:\$PORT; \
     server_name _; \
@@ -56,8 +56,15 @@ RUN echo "server { \
     location ~ \\\.php\$ { include fastcgi_params; fastcgi_pass 127.0.0.1:9000; fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name; } \
 }" > /etc/nginx/conf.d/default.conf.template
 
-# Expose HTTP (Render gebruikt $PORT env var automatisch)
+# Expose HTTP
 EXPOSE 80
 
-# Start PHP-FPM + Nginx via envsubst zodat $PORT wordt vervangen
-CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && php-fpm -D && nginx -g 'daemon off;'"
+# Start PHP-FPM, Nginx en run artisan commands zodat database correct is gemigreerd
+CMD sh -c "\
+    php artisan migrate --force && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && \
+    php-fpm -D && nginx -g 'daemon off;' \
+"
