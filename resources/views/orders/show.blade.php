@@ -1,4 +1,5 @@
 @use(\App\Enums\OrderStatus)
+@use(\App\Enums\UserRoles)
 
 <x-layout>
     <div class="flex flex-col min-h-screen font-sans bg-gradient-to-br from-black via-gray-900 to-gray-800">
@@ -6,7 +7,7 @@
             <h1 class="text-4xl font-extrabold text-[#ff9900] drop-shadow-lg mb-8">
                 Order Overzicht
             </h1>
-            
+
             <div class="w-full max-w-lg p-8 text-left bg-gray-800 border border-gray-700 shadow-xl rounded-2xl">
                 <p class="text-gray-700 mb-1">
                     <span class="font-semibold">Aangemaakt op:</span>
@@ -190,7 +191,7 @@
                        class="hover:cursor-pointer px-4 py-2 bg-[#ff9900] hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-sm">
                         Bewerk producten
                     </a>
-                    @if(! auth()?->user()->role === \App\Enums\UserRoles::BACKOFFICE_MEDEWERKER->name)
+                    @if(in_array(auth()->user()->role, [UserRoles::BACKOFFICE_MANAGER->name, UserRoles::ADMIN->name]))
                         <div class="relative flex items-center">
                             <input type="checkbox" id="delete-modal-toggle" class="hidden peer"/>
                             <label for="delete-modal-toggle"
